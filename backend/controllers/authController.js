@@ -61,7 +61,11 @@ export const resetPassword = async (req, res) => {
 //  LOGOUT
 export const logout = async (req, res) => {
   try {
-    res.clearCookie('token'); // Token-Cookie löschen
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: true,
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    }); // Token-Cookie löschen
     res.status(200).json({ message: 'Logout erfolgreich' });
   } catch (err) {
     res.status(500).json({ message: 'Logout fehlgeschlagen', error: err.message });
