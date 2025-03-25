@@ -7,7 +7,7 @@ const GoogleLoginButton = () => {
   const handleGoogleLogin = async () => {
     try {
       console.log('Starte Google-Login...'); // Debug-Log
-      window.location.href = '/api/users/google';
+      window.location.href = `https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?response_type=code&redirect_uri=https://testreschare-backend.onrender.com/api/users/google/callback&scope=profile email&client_id=1085467558493-6dtingv2puievh14ienpk0vki634m3b6.apps.googleusercontent.com`;
     } catch (error) {
       console.error('Fehler beim Google-Login:', error);
     }
@@ -22,7 +22,9 @@ const GoogleLoginButton = () => {
     </button>
   );
 };
+
 export default GoogleLoginButton;
+
 
 
 
