@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { ItemCardUser } from '../components/Item/ItemCardUser';
 import { ItemsContext } from '../context/ItemsContext';
 import { AuthContext } from '../context/AuthContext';
-
+import { CircularProgress } from '@mui/material';
 
 export const UserItemsPage = () => {
 
