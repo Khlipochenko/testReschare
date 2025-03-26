@@ -6,29 +6,25 @@ import { ItemsContext } from '../context/ItemsContext';
 import { AuthContext } from '../context/AuthContext';
 import { CircularProgress } from '@mui/material';
 
+
 export const UserItemsPage = () => {
 
   const {url, userItems, fetchUserItems,loadingUserItems}=useContext(ItemsContext)
-const {user}=useContext(AuthContext)
+  const {user}=useContext(AuthContext)
+
 
   useEffect(()=>{
-  console.log('befor',loadingUserItems)
-   fetchUserItems();
-   console.log('after',loadingUserItems)
-
-
-   
+     fetchUserItems();
     },[user])
- 
   return (
     <>
-    {loadingUserItems? <div className="flex justify-center items-center h-screen">
-           <CircularProgress></CircularProgress>
-         </div>
-         
-         :
-         <>
-      {userItems.length>0 && !loadingUserItems?
+     {loadingUserItems && (
+            <div className="fixed inset-0 h-screen w-screen backdrop-blur-sm bg-black/30 flex flex-col justify-center items-center z-50 ">
+              <CircularProgress />
+              
+            </div>
+          )}
+      {userItems.length>0?
       <div className='py-36'>
 {userItems.sort((a, b) => new Date(b.
   createdAt) - new Date(a.
@@ -43,7 +39,6 @@ const {user}=useContext(AuthContext)
     <NavLink to={'/items/new/create'} className="shadow w-3/12 text-center  p-2 rounded-lg bg-custom-text-green text-white font-medium sm:hover:bg-custom-text-brown ">Verschenken</NavLink>
 </div>
 </div>}
-</>}
     </>
   )
 }

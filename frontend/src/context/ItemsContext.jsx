@@ -7,7 +7,7 @@ export const ItemsProvider = ({ children }) => {
 
   const [items, setItems] = useState([]);
   const [userItems, setUserItems] = useState([]); // ist hier userItems oder items gemeint?
-const [loadingUserItems, setLoadingUserItems]=useState(true)
+  const [loadingUserItems, setLoadingUserItems]=useState(true)
   const fetchUserItems = async () => {
     setLoadingUserItems(true);
     try {
@@ -26,12 +26,10 @@ const [loadingUserItems, setLoadingUserItems]=useState(true)
       } else {
         setUserItems([]);
       }
-     
     } catch (e) {
       console.log(e);
-      
     }finally {
-      setLoadingUserItems(false); // <-- Устанавливаем false после загрузки
+      setLoadingUserItems(false); 
     }
   };
 
