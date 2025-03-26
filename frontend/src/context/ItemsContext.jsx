@@ -7,7 +7,7 @@ export const ItemsProvider = ({ children }) => {
 
   const [items, setItems] = useState([]);
   const [userItems, setUserItems] = useState([]); // ist hier userItems oder items gemeint?
-
+const [loadingUserItems, setLoadingUserItems]=useState(true)
   const fetchUserItems = async () => {
     try {
       const response = await fetch(`${url}/api/items/user/items/meine-artikel`, {
@@ -25,8 +25,10 @@ export const ItemsProvider = ({ children }) => {
       } else {
         setUserItems([]);
       }
+      setLoadingUserItems(false)
     } catch (e) {
       console.log(e);
+      setLoadingUserItems(false)
     }
   };
 
@@ -57,7 +59,8 @@ export const ItemsProvider = ({ children }) => {
         userItems,
         setUserItems,
         fetchUserItems,
-        url
+        url,
+        loadingUserItems
       }}
     >
       {children}
