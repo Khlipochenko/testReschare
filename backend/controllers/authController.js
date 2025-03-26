@@ -66,7 +66,7 @@ export const logout = async (req, res) => {
       secure: true,
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     }); // Token-Cookie löschen
-    res.status(200).json({ message: 'Logout erfolgreich' });
+    res.end()
   } catch (err) {
     res.status(500).json({ message: 'Logout fehlgeschlagen', error: err.message });
   }
