@@ -9,20 +9,21 @@ import { CircularProgress } from '@mui/material';
 export const UserItemsPage = () => {
 
   const {url, userItems, fetchUserItems}=useContext(ItemsContext)
+  const [loadingItems, setLoadingItems]=useState(true)
   const {loadingUser}=useContext(AuthContext)
  const {userId}=useParams()
 
   useEffect(()=>{
   
      fetchUserItems();
-    
+    setLoadingItems(false)
 
 
    
     },[])
 
 
-     if (loadingUser) {
+     if (loadingItems) {
        return (
          <div className="flex justify-center items-center h-screen">
            <CircularProgress></CircularProgress>
