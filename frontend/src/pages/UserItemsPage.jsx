@@ -20,13 +20,17 @@ export const UserItemsPage = () => {
 
    
     },[])
+
+
+     if (loadingUser) {
+       return (
+         <div className="flex justify-center items-center h-screen">
+           <CircularProgress></CircularProgress>
+         </div>
+       );
+     } 
   return (
     <>
-     {loadingUser && (
-            <div className="fixed inset-0 h-screen w-screen backdrop-blur-sm bg-black/30 flex flex-col justify-center items-center z-50 ">
-              <CircularProgress />
-            </div>
-          )}
       {userItems.length>0?
       <div className='py-36'>
 {userItems.sort((a, b) => new Date(b.
