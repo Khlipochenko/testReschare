@@ -9,9 +9,7 @@ import { CircularProgress } from '@mui/material';
 export const UserItemsPage = () => {
 
   const {url, userItems, fetchUserItems,loadingUserItems}=useContext(ItemsContext)
-  
- 
- const {userId}=useParams()
+const {user}=useContext(AuthContext)
 
   useEffect(()=>{
   console.log('befor',loadingUserItems)
@@ -20,7 +18,7 @@ export const UserItemsPage = () => {
 
 
    
-    },[])
+    },[user])
  
   return (
     <>
@@ -35,7 +33,7 @@ export const UserItemsPage = () => {
 {userItems.sort((a, b) => new Date(b.
   createdAt) - new Date(a.
     createdAt)).map((item, i)=>(
-  <ItemCardUser key={i} item={item} userId={userId}></ItemCardUser>
+  <ItemCardUser key={i} item={item} userId={user._id}></ItemCardUser>
 ))}
       </div>
       :
