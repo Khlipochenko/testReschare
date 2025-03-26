@@ -14,9 +14,9 @@ export const UserItemsPage = () => {
  const {userId}=useParams()
 
   useEffect(()=>{
-  
+  console.log('befor',loadingUserItems)
    fetchUserItems();
-
+   console.log('after',loadingUserItems)
 
 
    
@@ -30,7 +30,7 @@ export const UserItemsPage = () => {
          
          :
          <>
-      {userItems.length>0?
+      {userItems.length>0 && !loadingUserItems?
       <div className='py-36'>
 {userItems.sort((a, b) => new Date(b.
   createdAt) - new Date(a.
