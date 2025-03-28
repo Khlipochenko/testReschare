@@ -7,7 +7,7 @@ const GoogleLoginButton = () => {
   const handleGoogleLogin = async () => {
     try {
       console.log('Starte Google-Login...'); // Debug-Log
-      window.location.href = `https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?response_type=code&redirect_uri=https://testreschare-backend.onrender.com/api/users/google/callback&scope=profile email&client_id=708261018005-qd6f9ej3a5b36emggpaouumnfbsaidq3.apps.googleusercontent.com`;
+      window.location.href = `${import.meta.env.VITE_API_URL}/api/users/google`;
     } catch (error) {
       console.error('Fehler beim Google-Login:', error);
     }
