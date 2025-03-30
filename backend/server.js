@@ -48,8 +48,7 @@ app.use('/api/search', searchRouter)
 app.use('/api/messages', messageRouter);
 app.use('/api/inbox', inboxRouter)
 app.get("/", (req, res) => res.send("API Working"));
-res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-res.set('Pragma', 'no-cache');
+
 app.use(errorMiddleware)
 const PORT = process.env.PORT || 6000;
 
