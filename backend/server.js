@@ -38,7 +38,6 @@ await connectCloudinary();
 app.use(passport.initialize());
 
 
-
 //Routers
 app.use("/api/users", userRouter);
 app.use('/api/items', itemRouter)
@@ -48,7 +47,11 @@ app.use('/api/search', searchRouter)
 app.use('/api/messages', messageRouter);
 app.use('/api/inbox', inboxRouter)
 app.get("/", (req, res) => res.send("API Working"));
-
+app.use((req, res, next) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.set('Pragma', 'no-cache');
+  next();
+});
 app.use(errorMiddleware)
 const PORT = process.env.PORT || 6000;
 
