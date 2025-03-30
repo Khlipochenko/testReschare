@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-const ortSchema = new Schema(
+const locationSchema = new Schema(
   {
     city: {
       type: String
@@ -69,7 +69,7 @@ const ItemSchema = new Schema(
         required: true
       }
     ],
-    ort: ortSchema,
+    location: locationSchema,
     userId: {
       type: Schema.Types.ObjectId,
       ref: 'user'

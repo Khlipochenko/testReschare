@@ -12,6 +12,8 @@ export const useActiveFilters = () => {
     setSelectedSize,
     selectedColor,
     setSelectedColor,
+    selectedLocation,
+    setSelectedLocation,
     selectedShipping,
     setSelectedShipping,
     clearAllFilters,
@@ -38,6 +40,8 @@ export const useActiveFilters = () => {
       setSelectedSize(selectedSize.filter((item) => item !== value));
     } else if (filter === 'color') {
       setSelectedColor(selectedColor.filter((item) => item !== value));
+    } else if (filter === 'location') {
+      setSelectedColor(selectedLocation.filter((item) => item !== value));
     } else if (filter === 'shipping') {
       setSelectedShipping('');
     } else if (filter === 'searchTerm') {
@@ -53,6 +57,7 @@ export const useActiveFilters = () => {
     selectedSubcategory.length > 0 ||
     selectedSize.length > 0 ||
     selectedColor.length > 0 ||
+    selectedLocation.length > 0 ||
     selectedShipping ||
     searchTerm;
 
@@ -61,6 +66,7 @@ export const useActiveFilters = () => {
     selectedSubcategory,
     selectedSize,
     selectedColor,
+    selectedLocation,
     selectedShipping,
     removeFilter,
     clearAllFilters,

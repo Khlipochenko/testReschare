@@ -61,24 +61,26 @@ export const Header = () => {
     <>
       {/* Header nur auf der Homepage am Anfang transparent, ansonsten mit bg-color */}
       <div
-        className={`fixed h-24 md:h-28 lg:h-32 top-0 left-0 w-full z-10 ${
-          isHomePage && !isScrolled ? 'bg-transparent' : 'bg-custom-bg-page shadow-sm shadow-gray-200'
+        className={`fixed h-32 top-0 left-0 w-full z-40 ${
+          isHomePage && !isScrolled ? 'bg-transparent text-custom-text-brown' : 'bg-custom-bg-footer shadow-md'
         }`}
       >
         {/* Logo mit Link zur Homepage */}
-        <div className="flex h-full w-full items-center justify-between px-[5vw] md:px-[7vw] lg:px-[9vw] text-lg font-medium bg-transparent gap-8">
+        <div className="flex h-full w-full items-center justify-between px-[5vw] md:px-[7vw] lg:px-[9vw] text-lg bg-transparent gap-8">
           <NavLink to="/" className="cursor-pointer">
-            <img src="/reshareLogo.png" alt="Logo" className="w-32 md:w-36 lg:w-40 h-auto" />
+            <img src="/reshareLogo.png" alt="Logo" className="w-32 md:w-40 lg:w-48 h-auto" />
           </NavLink>
 
           {/* Desktop-Navigation */}
           <HeaderNavigation isHomePage={isHomePage} isScrolled={isScrolled} />
 
           {/* Container rechts  hier red button notification hinzugefügt */}
-          <div className="flex items-center justify-center text-custom-text-brown">
+          <div className="flex items-center justify-center">
+            {user && <div className="md:hidden text-2xl flex items-center justify-center">{user.username}</div>}
+
             {user && (
               <NavLink to="/chat" onClick={resetNewMessageNotification} className="relative">
-                <FaEnvelope className="text-2xl" />
+                <FaEnvelope className="text-2xl ml-8" />
                 {hasNewMessage && <span className="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full"></span>}
               </NavLink>
             )}
@@ -93,23 +95,27 @@ export const Header = () => {
             {/* Anmeldebutton oder wenn User eingeloggt ist user-icon mit Dropdown */}
             {user ? (
               <div className="md:relative md:flex md:justify-center md:items-center md:gap-2 ml-8 hidden">
-                <button className="flex gap-2" onClick={toggleMenu}>
-                  {' '}
+                <button className="flex items-center justify-center gap-2" onClick={toggleMenu}>
                   <FaUser className="text-2xl" />
-                  {/* <p className="text-lg">{`Hallo ${user.username}!`}</p> */}
+                  <div className="text-2xl flex items-center justify-center">{user.username}</div>
                 </button>
 
                 {/* Dropdown Menu */}
                 {showMenu && (
                   <div className="absolute right-0 top-8 mt-2 w-48 text-lg bg-white shadow-xl border rounded-md  z-20">
-                    <NavLink to={`/user/items/meine-artikel`} onClick={() => setShowMenu(false)}>
+                    <NavLink
+                      to={`/user/items/meine-artikel`}
+                      onClick={() => {
+                        setShowMenu(false);
+                      }}
+                    >
                       {' '}
-                      <div className="px-4 py-2 cursor-pointer text-custom-text-green hover:bg-custom-text-green hover:text-white">
+                      <div className="px-4 py-2 cursor-pointer hover:bg-custom-text-green hover:text-white">
                         Meine Artikel
                       </div>
                     </NavLink>
                     <div
-                      className="px-4 py-2 cursor-pointer text-custom-text-green hover:bg-custom-text-green hover:text-white"
+                      className="px-4 py-2 cursor-pointer hover:bg-custom-text-green hover:text-white"
                       onClick={handleLogout}
                     >
                       <button>Logout</button>
@@ -119,8 +125,15 @@ export const Header = () => {
               </div>
             ) : (
               <button
-                onClick={() => navigate('/login', { state: { from: location.pathname } })}
-                className="bg-custom-text-green hover:bg-custom-text-brown text-white px-4 py-2 ml-10 rounded-md hover:bg-custom-olivegreen hidden md:flex"
+                onClick={() => {
+                  navigate('/login', { state: { from: location.pathname } });
+                  window.scrollTo(0.0);
+                }}
+                className={`text-xl text-white px-4 py-2 ml-10 rounded-md hover:bg-custom-olivegreen hidden md:flex ${
+                  isHomePage && !isScrolled
+                    ? 'bg-custom-text-brown hover:bg-custom-text-green'
+                    : 'bg-custom-text-green hover:bg-custom-text-brown'
+                }`}
               >
                 <p>Anmelden</p>
               </button>

@@ -8,14 +8,17 @@ export const FilterProvider = ({ children }) => {
   const [selectedSubcategory, setSelectedSubcategory] = useState([]);
   const [selectedSize, setSelectedSize] = useState([]);
   const [selectedColor, setSelectedColor] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState([]);
   const [selectedShipping, setSelectedShipping] = useState('');
   const [showFilter, setShowFilter] = useState(false);
+  const [openFilters, setOpenFilters] = useState({});
   const [totalItemsCount, setTotalItemsCount] = useState(0);
   const [availableFilters, setAvailableFilters] = useState({
     categories: [],
     subcategories: [],
     sizes: [],
     colors: [],
+    location: [],
     shipping: ''
   });
   const [pendingFilters, setPendingFilters] = useState({
@@ -23,6 +26,7 @@ export const FilterProvider = ({ children }) => {
     subcategory: [],
     size: [],
     color: [],
+    location: [],
     shipping: ''
   });
 
@@ -34,6 +38,7 @@ export const FilterProvider = ({ children }) => {
     setSelectedSubcategory([]);
     setSelectedSize([]);
     setSelectedColor([]);
+    setSelectedLocation([]);
     setSelectedShipping('');
     setSearchTerm('');
     setPendingFilters({
@@ -41,8 +46,14 @@ export const FilterProvider = ({ children }) => {
       subcategory: [],
       size: [],
       color: [],
+      location: [],
       shipping: ''
     });
+    resetOpenFilters();
+  };
+
+  const resetOpenFilters = () => {
+    setOpenFilters({});
   };
 
   return (
@@ -56,6 +67,8 @@ export const FilterProvider = ({ children }) => {
         setSelectedSize,
         selectedColor,
         setSelectedColor,
+        selectedLocation,
+        setSelectedLocation,
         selectedShipping,
         setSelectedShipping,
         availableFilters,
@@ -63,6 +76,9 @@ export const FilterProvider = ({ children }) => {
         clearAllFilters,
         showFilter,
         setShowFilter,
+        openFilters,
+        setOpenFilters,
+        resetOpenFilters,
         totalItemsCount,
         setTotalItemsCount,
         pendingFilters,
