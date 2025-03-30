@@ -7,11 +7,11 @@ export const SocialMedia = () => {
         <>
             <div>
                 <h4 className="
-                    hidden
+                    text-4xl
                     md:text-3xl 
                     mb-6
+                    hidden
                     md:block
-                    xl:text-4xl
                     "
                 >
                     Social Media

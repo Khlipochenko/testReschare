@@ -7,9 +7,7 @@ export const ItemCard = ({ item }) => {
   return (
     <div
       className="text-custom-text-grey cursor-pointer rounded-lg "
-      onClick={() =>{ 
-        window.scrollTo(0, 0)
-        navigate(`/items/${item._id}`, { state: { from: location.pathname } })}}
+      onClick={() => navigate(`/items/${item._id}`, { state: { from: location.pathname } })}
     >
       <div className="overflow-hidden rounded-lg">
         <div className="overflow-hidden rounded-lg">

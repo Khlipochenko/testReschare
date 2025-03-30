@@ -1,0 +1,72 @@
+import { NavLink } from 'react-router-dom';
+
+export const Information = () => {
+  return (
+    <>
+      <div>
+        <h4
+          className="
+                hidden
+                md:text-3xl
+                mb-6
+                md:block
+                xl:text-4xl
+                "
+        >
+          Information
+        </h4>
+        <div
+          className="
+                pl-2
+                flex
+                flex-col
+                gap-2
+                "
+        >
+          <NavLink to="/about">
+            <p
+              className="
+                    hover:text-custom-text-lightgreen
+                    hover:underline
+                    "
+            >
+              Über uns
+            </p>
+          </NavLink>
+          <p
+            className="
+                    hover:text-custom-text-lightgreen
+                    hover:underline
+                    "
+          >
+            Abwicklung
+          </p>
+          <p
+            className="
+                    hover:text-custom-text-lightgreen
+                    hover:underline
+                    "
+          >
+            AGBs
+          </p>
+          <p
+            className="
+                    hover:text-custom-text-lightgreen
+                    hover:underline
+                    "
+          >
+            Datenschutz
+          </p>
+          <p
+            className="
+                    hover:text-custom-text-lightgreen
+                    hover:underline
+                    "
+          >
+            Impressum
+          </p>
+        </div>
+      </div>
+    </>
+  );
+};

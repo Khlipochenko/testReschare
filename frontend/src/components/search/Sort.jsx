@@ -17,7 +17,7 @@ export const Sort = () => {
 
   return (
     <div className="relative justify-end flex">
-      <div className="flex items-center py-2 text-xl text-custom-text-brown">
+      <div className="flex items-center py-2 text-lg text-custom-text-brown">
         <p>Sortieren nach:</p>
         <button className="flex items-center ml-2" onClick={toggleMenu}>
           {sortOption || 'Wählen'}

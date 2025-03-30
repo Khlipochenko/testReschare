@@ -18,6 +18,8 @@ export const Layout = () => {
       
       "
       >
+        {/* ZEILE 31 (top-28) HÖHE HEADER V=N MING ANPASSEN */}
+
         {!isHomePage && (
           <div
             className="
@@ -32,7 +34,6 @@ export const Layout = () => {
               opacity-30
               z-[-99]
               bg-center
-              md:bg-top
         "
           ></div>
         )}

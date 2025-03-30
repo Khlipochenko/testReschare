@@ -2,17 +2,15 @@ import React, { useContext, useEffect, useState } from 'react';
 import { FilterContext } from '../context/FilterContext';
 import { SearchContext } from '../context/SearchContext';
 import { useParams } from 'react-router-dom';
-import { ItemsContext } from '../context/ItemsContext';
 
 export const useFilteredItems = () => {
   const { category } = useParams();
-  const { searchTerm, sortOption } = useContext(SearchContext);
+  const { searchTerm, showSearch, sortOption } = useContext(SearchContext);
   const {
     selectedCategory,
     selectedSubcategory,
     selectedSize,
     selectedColor,
-    selectedLocation,
     selectedShipping,
     availableFilters,
     setAvailableFilters,
@@ -35,7 +33,6 @@ export const useFilteredItems = () => {
         subcategory: selectedSubcategory.join(','),
         size: selectedSize.join(','),
         color: selectedColor.join(','),
-        location: selectedLocation.join(','),
         shipping: selectedShipping,
         sort: sortOption,
         page: currentPage,
@@ -59,14 +56,11 @@ export const useFilteredItems = () => {
       }
 
       const data = await response.json();
-
       setFilteredItems(data.searchItems);
       setTotalPages(data.totalPages);
       setTotalItemsCount(data.totalItemsCount);
-      console.log('Received availableFilters:', data.availableFilters, data.totalItemsCount);
-
+      // console.log('Received availableFilters:', data.availableFilters, data.totalItemsCount);
       setAvailableFilters(data.availableFilters);
-
       // console.log('Gefilterte Items gesetzt:', data.searchItems);
     } catch (error) {
       console.error('Fehler beim Laden der Items:', error);
@@ -76,31 +70,16 @@ export const useFilteredItems = () => {
   };
 
   useEffect(() => {
-    // Setzt die Seite auf 1, wenn sich Filter oder Suchbegriffe ändern
-    setCurrentPage(1);
-  }, [
-    category,
-    searchTerm,
-    sortOption,
-    selectedCategory,
-    selectedSubcategory,
-    selectedSize,
-    selectedColor,
-    selectedLocation,
-    selectedShipping
-  ]);
-
-  useEffect(() => {
     fetchFilteredItems();
   }, [
     category,
     searchTerm,
+    showSearch,
     sortOption,
     selectedCategory,
     selectedSubcategory,
     selectedSize,
     selectedColor,
-    selectedLocation,
     selectedShipping,
     currentPage
   ]);

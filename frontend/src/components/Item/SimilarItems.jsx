@@ -39,12 +39,12 @@ export const SimilarItems = ({ size, category, subcategory, id }) => {
   return (
     similarItems &&
     similarItems.length > 0 && (
-      <div className=" w-full pl-4 md:pl-0">
-        <h1 className="mt-10 mb-4 sm:text-2xl font-medium text-center md:text-start ">Ähnliche Artikel</h1>
-        <div className="flex flex-wrap gap-6 justify-center md:justify-start">
+      <div className=" bg-custom-bg-page w-full pl-4 md:pl-0">
+        <h1 className="mt-10 mb-4 sm:text-2xl font-medium text-center md:text-start">Ähnliche Artikel</h1>
+        <div className="flex flex-wrap gap-4 justify-center md:justify-start">
           {similarItems.map((item, i) => (
             <div
-              className="flex flex-col gap-2    cursor-pointer "
+              className="flex flex-col gap-2 p-4 bg-white rounded-md shadow cursor-pointer "
               key={i}
               onClick={() => {
     

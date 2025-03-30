@@ -22,11 +22,7 @@ export const searchItemsInDB = async (filter, searchQuery, currentPage, itemsPer
         // Objekt
         $search: {
           index: 'default',
-          text: {
-            query: searchQuery,
-            path: ['title', 'description', 'category', 'subcategory', 'size', 'color.name', 'ort.city'],
-            fuzzy: { maxEdits: 1, prefixLength: 1 }
-          }
+          text: { query: searchQuery, path: ['title', 'description'], fuzzy: { maxEdits: 2, prefixLength: 1 } }
         }
       });
     }
@@ -42,7 +38,6 @@ export const searchItemsInDB = async (filter, searchQuery, currentPage, itemsPer
           totalCount: [{ $count: 'total' }],
           availableFilters: [
             { $unwind: '$color' }, // color-feld muss "entpackt" werden, da array (Items können 2 Farben haben)
-            { $unwind: '$location' },
             {
               $group: {
                 // group sammelt eindeutige Werte aus gefilterten Dokumenten
@@ -51,7 +46,6 @@ export const searchItemsInDB = async (filter, searchQuery, currentPage, itemsPer
                 subcategories: { $addToSet: '$subcategory' },
                 sizes: { $addToSet: '$size' },
                 colors: { $addToSet: '$color' },
-                location: { $addToSet: '$location.city' },
                 shipping: { $addToSet: '$shipping' }
               }
             }

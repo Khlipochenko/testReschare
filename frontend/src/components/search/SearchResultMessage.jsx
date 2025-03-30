@@ -7,7 +7,7 @@ export const SearchResultMessage = () => {
   if (!searchTerm) return null;
 
   return (
-    <div className="text-xl text-custom-text-brown">
+    <div className="text-lg text-custom-text-brown">
       <p>Suchergebnisse für "{searchTerm}"</p>
     </div>
   );

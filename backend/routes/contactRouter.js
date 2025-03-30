@@ -13,10 +13,10 @@ contactRouter.post("/", async (req, res) => {
     const transmitter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-             user: user,
-             pass: pass,
-        //    user: 'eisianni067@gmail.com',
-        //    pass: "wffy colk vufz ixsh"
+            // user: user,
+            // pass: pass,
+            user: 'eisianni067@gmail.com',
+            pass: "wffy colk vufz ixsh"
         }
     })
     try {
@@ -24,10 +24,10 @@ contactRouter.post("/", async (req, res) => {
         await newIssue.save();
 
         const infoMail = {
-        //    from: "eisianni067@gmail.com",
-        //    to: "eisianni067@gmail.com",
-             from: user,
-             to: user,
+            from: "eisianni067@gmail.com",
+            to: "eisianni067@gmail.com",
+            // from: user,
+            // to: user,
             subject: "Neuer Eintrag über das Kontaktformular",
             text: `Neue Nachricht von ${newIssue.name}: \n${newIssue.email}\n${newIssue.message}`
         }

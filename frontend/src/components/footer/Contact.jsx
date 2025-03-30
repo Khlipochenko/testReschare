@@ -23,7 +23,7 @@ export const Contact = () => {
         try {
             e.preventDefault();
             setIsLoading(true)
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
+            const response = await fetch("http://localhost:3210/api/contact", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
@@ -46,11 +46,11 @@ export const Contact = () => {
         <>
             <div>
                 <h4 className="
-                  hidden
+                  text-4xl
                   md:text-3xl
                   mb-6
+                  hidden
                   md:block 
-                  xl:text-4xl
                 ">
                     Kontakt
                 </h4>

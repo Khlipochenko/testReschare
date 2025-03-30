@@ -7,7 +7,7 @@ const GoogleLoginButton = () => {
   const handleGoogleLogin = async () => {
     try {
       console.log('Starte Google-Login...'); // Debug-Log
-      window.location.href = '/api/users/google';
+      window.location.href = `${import.meta.env.VITE_API_URL}/api/users/google`;
     } catch (error) {
       console.error('Fehler beim Google-Login:', error);
     }
@@ -22,7 +22,9 @@ const GoogleLoginButton = () => {
     </button>
   );
 };
+
 export default GoogleLoginButton;
+
 
 
 

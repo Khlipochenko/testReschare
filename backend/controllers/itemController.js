@@ -51,7 +51,7 @@ export const createNewItem = async (req, res, next) => {
       subcategory: req.body.subcategory,
       size: req.body.size,
       color: colors,
-      location: ort,
+      ort: ort,
       shipping: req.body.shipping,
       images: uploadedImages,
       userId: user._id,
@@ -238,7 +238,7 @@ export const itemEdit = async (req, res, next) => {
     item.size = size;
     item.color = colors;
     item.shipping = shipping;
-    item.location = place;
+    item.ort = place;
     item.images = newImagesArray;
 
     await item.save();

@@ -1,8 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 export const LogoutPage = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0); // Scrollt nach oben
-  }, []);
   return (
     <div className="min-h-screen pt-36 flex items-center justify-center">
       <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-lg rounded-lg text-center">

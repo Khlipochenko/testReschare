@@ -1,27 +1,28 @@
-import { useContext, useEffect, useState } from 'react';
-import { Size } from '../components/Item/Size';
-import { Category } from '../components/Item/Category';
-import { Fotos } from '../components/Item/Fotos';
-import { Ort } from '../components/Item/Ort';
-import { toast } from 'react-toastify';
-import { CircularProgress } from '@mui/material';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Color } from '../components/Item/Color';
-import { Shipping } from '../components/Item/Shipping';
-import { Vorschau } from '../components/Item/Vorschau';
-import { ItemsContext } from '../context/ItemsContext';
+import { useContext, useEffect, useState } from "react";
+import { Size } from "../components/Item/Size";
+import { Category } from "../components/Item/Category";
+import { Fotos } from "../components/Item/Fotos";
+import { Ort } from "../components/Item/Ort";
+import { toast } from "react-toastify";
+import { CircularProgress } from "@mui/material";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Color } from "../components/Item/Color";
+import { Shipping } from "../components/Item/Shipping";
+import { Vorschau } from "../components/Item/Vorschau";
+import { ItemsContext } from "../context/ItemsContext";
 
-export const ItemCreatePage = ({ userId }) => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [categoryActiv, setCategoryActiv] = useState('');
-  const [subcategory, setSubCategory] = useState('');
-  const [size, setSize] = useState('');
+
+export const ItemCreatePage = ({userId}) => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [categoryActiv, setCategoryActiv] = useState("");
+  const [subcategory, setSubCategory] = useState("");
+  const [size, setSize] = useState("");
   const [fotos, setFotos] = useState([]);
-  const [ort, setOrt] = useState('');
+  const [ort, setOrt] = useState("");
   const [colors, setColors] = useState([]);
   const [isLoading, setIsloading] = useState(false);
-  const [shipping, setShipping] = useState('Versand möglich');
+  const [shipping, setShipping] = useState("Versand möglich");
   const [showVorshau, setShowVorshau] = useState(false);
   const [errors, setErrors] = useState({
     title: false,
@@ -29,16 +30,13 @@ export const ItemCreatePage = ({ userId }) => {
     size: false,
     description: false,
     fotos: false,
-    colors: false
+    colors: false,
   });
 
-  const { url, fetchUserItems } = useContext(ItemsContext);
-
-  useEffect(() => {
-    window.scrollTo(0, 0); // Scrollt nach oben
-  }, []);
-
+  const { url, fetchUserItems} = useContext(ItemsContext);
+ 
   const navigate = useNavigate();
+
 
   //Prüfen ob es alle Felder ausfüllen
   function benötigteFelderPrüfen() {
@@ -48,12 +46,19 @@ export const ItemCreatePage = ({ userId }) => {
       size: !size,
       description: !description,
       fotos: fotos.length === 0,
-      fotosUrl: fotos.length === 0,
-      colors: colors.length === 0
+      fotosUrl:fotos.length === 0,
+      colors: colors.length === 0,
     };
     setErrors(newErrors);
-    if (!title || !categoryActiv || !size || fotos.length === 0 || !description || colors.length === 0) {
-      toast.error('Alle Felder mit * sollen ausgefüllt werden');
+    if (
+      !title ||
+      !categoryActiv ||
+      !size ||
+      fotos.length === 0 ||
+      !description ||
+      colors.length === 0
+    ) {
+      toast.error("Alle Felder mit * sollen ausgefüllt werden");
       return false;
     }
     return true;
@@ -75,36 +80,43 @@ export const ItemCreatePage = ({ userId }) => {
     }
     try {
       const formData = new FormData();
-      formData.append('title', title.trim());
+      formData.append("title", title.trim());
 
-      formData.append('description', description.trim());
+      formData.append("description", description.trim());
 
-      formData.append('category', categoryActiv);
-      formData.append('subcategory', subcategory);
-      formData.append('size', size);
+      formData.append("category", categoryActiv);
+      formData.append("subcategory", subcategory);
+      formData.append("size", size);
       colors.forEach((color) => {
-        formData.append('color', JSON.stringify({ colorcode: color.colorcode, name: color.name }));
+        formData.append(
+          "color",
+          JSON.stringify({ colorcode: color.colorcode, name: color.name })
+        );
       });
-      formData.append('shipping', shipping);
+      formData.append("shipping", shipping);
 
       if (ort.city && ort.country) {
-        formData.append('ort', JSON.stringify({ city: ort.city, country: ort.country }));
+        formData.append(
+          "ort",
+          JSON.stringify({ city: ort.city, country: ort.country })
+        );
       }
       if (fotos.length > 0) {
         fotos.forEach((img) => {
-          formData.append('images', img);
+          formData.append("images", img);
         });
       }
       setIsloading(true);
       const response = await fetch(`${url}/api/items/create`, {
-        method: 'POST',
-        credentials: 'include',
-        body: formData
+        method: "POST",
+        credentials:'include',
+        body: formData,
       });
 
       // for (let [key, value] of formData.entries()) {
       //   console.log(`${key}:`, value);
       // }
+
 
       // if (!response.ok) {
       //   setIsloading(false);
@@ -113,20 +125,20 @@ export const ItemCreatePage = ({ userId }) => {
       const result = await response.json();
       if (!result.success) {
         setIsloading(false);
-        if (result.message === 'No token provided') {
-          navigate('/login', { state: { from: location.pathname } });
-          return toast.error('Um einen Artikel zu verschenken, melde dich bitte an!');
-        }
+         if(result.message==='No token provided'){
+        ;
+        navigate('/login', {state:{from: location.pathname}})
+       return toast.error('Um einen Artikel zu verschenken, melde dich bitte an!')
+     }   
       } else {
         setIsloading(false);
         fetchUserItems(userId);
         toast.success(result.message);
-        window.scrollTo(0, 0);
-        navigate('/items/success');
+        navigate("/items/success");
       }
     } catch (e) {
       setIsloading(false);
-      toast.error(e.message);
+      toast.error( e.message);
     }
   }
 
@@ -141,7 +153,7 @@ export const ItemCreatePage = ({ userId }) => {
     colors,
     shipping,
     subcategory,
-    status: 'aktiv'
+    status:'aktiv'
   };
 
   return (
@@ -156,16 +168,22 @@ export const ItemCreatePage = ({ userId }) => {
           <Vorschau item={item} setShowVorshau={setShowVorshau}></Vorschau>
         </div>
       )}
-      <div className="w-screen   flex justify-center items-center pt-40 pb-11 ">
+      <div className="w-screen  bg-custom-bg-page flex justify-center items-center pt-36 ">
         <div className="flex  pt-10 justify-center items-center flex-col text-custom-text-green bg-white max-lg:w-3/4 w-2/4 rounded shadow">
-          <h1 className="text-3xl font-medium max-sm:text-xl"> Artikel verschenken</h1>
-          <form className="flex flex-col w-3/6 max-md:w-4/6 max-sm:w-5/6 mt-4" onSubmit={(e) => handleOnSubmitForm(e)}>
+          <h1 className="text-3xl font-medium max-sm:text-xl">
+            {" "}
+            Artikel schenken
+          </h1>
+          <form
+            className="flex flex-col w-3/6 max-md:w-4/6 max-sm:w-5/6 mt-4"
+            onSubmit={(e) => handleOnSubmitForm(e)}
+          >
             <label className="mb-2 mt-6" htmlFor="titel">
               Titel: <span className="text-custom-highlight-cherryred">*</span>
             </label>
             <input
               type="text"
-              // required
+             // required
               value={title}
               onChange={(e) => {
                 setTitle(e.target.value);
@@ -173,11 +191,12 @@ export const ItemCreatePage = ({ userId }) => {
               }}
               placeholder="z.B. Hose"
               className={`p-2 rounded shadow outline-custom-text-lightgreen mb-3 border ${
-                errors.title ? 'border-custom-highlight-cherryred' : ''
+                errors.title ? "border-custom-highlight-cherryred" : ""
               }`}
             />
             <label className="mb-2 mt-3 " htmlFor="beschreibung">
-              Beschreibung: <span className="text-custom-highlight-cherryred">*</span>
+              Beschreibung:{" "}
+              <span className="text-custom-highlight-cherryred">*</span>
             </label>
             <textarea
               value={description}
@@ -188,7 +207,7 @@ export const ItemCreatePage = ({ userId }) => {
               name="beschreibung"
               id="beschreibung"
               className={`rounded shadow outline-custom-text-lightgreen p-2 min-h-32 border ${
-                errors.description ? 'border-custom-highlight-cherryred' : ''
+                errors.description ? "border-custom-highlight-cherryred" : ""
               }`}
             ></textarea>
             <Category
@@ -210,17 +229,32 @@ export const ItemCreatePage = ({ userId }) => {
                   setErrors={setErrors}
                   new={true}
                 />
-                <Color colors={colors} setColors={setColors} errors={errors} setErrors={setErrors}></Color>
+                <Color
+                  colors={colors}
+                  setColors={setColors}
+                  errors={errors}
+                  setErrors={setErrors}
+                ></Color>
               </>
             )}
 
-            <Ort ort={ort} setOrt={setOrt} new={true}></Ort>
+            <Ort ort={ort} 
+            setOrt={setOrt}
+            new={true}
+            >
+
+            </Ort>
             <Shipping shipping={shipping} setShipping={setShipping}></Shipping>
             <h1 className="mt-6">
               Bilder( max 6): <span className="text-custom-highlight-cherryred">*</span>
             </h1>
 
-            <Fotos fotos={fotos} setFotos={setFotos} errors={errors} setErrors={setErrors} />
+            <Fotos
+              fotos={fotos}
+              setFotos={setFotos}
+              errors={errors}
+              setErrors={setErrors}
+            />
             <p className="text-custom-highlight-cherryred">* Pflichtfelder</p>
             <div className="flex gap-4 w-100 justify-end mb-4 mt-6">
               <button

@@ -6,11 +6,11 @@ export const Information = () => {
       <div>
         <h4
           className="
-                hidden
+                text-4xl
                 md:text-3xl
                 mb-6
+                hidden
                 md:block
-                xl:text-4xl
                 "
         >
           Information
@@ -23,7 +23,7 @@ export const Information = () => {
                 gap-2
                 "
         >
-          <NavLink to="/about">
+          <NavLink to="/about" onClick={() => window.scrollTo(0, 0)}>
             <p
               className="
                     hover:text-custom-text-lightgreen

@@ -15,7 +15,7 @@ export const HeaderSidebar = ({ showSideMenu, setShowSideMenu, handleLogout, use
       >
         <div
           onClick={() => setShowSideMenu(false)}
-          className="w-full bg-custom-text-green text-white pl-6 py-2 text-xl flex justify-between items-center cursor-pointer md:hidden"
+          className="w-full bg-custom-text-green text-white pl-6 py-2 text-lg flex justify-between items-center cursor-pointer md:hidden"
         >
           <h3 className="">Schliessen</h3>
           <button
@@ -27,7 +27,7 @@ export const HeaderSidebar = ({ showSideMenu, setShowSideMenu, handleLogout, use
         </div>
 
         {/* Navigation Links */}
-        <div className="flex flex-col text-custom-text-green text-xl">
+        <div className="flex flex-col text-custom-text-green text-lg">
           <NavLink
             to="/category/Damen"
             className="px-6 py-4 border-b"

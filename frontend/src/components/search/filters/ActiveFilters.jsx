@@ -4,15 +4,8 @@ import { IoClose } from 'react-icons/io5';
 import { SearchContext } from '../../../context/SearchContext';
 
 export const ActiveFilters = () => {
-  const {
-    selectedCategory,
-    selectedSubcategory,
-    selectedSize,
-    selectedColor,
-    selectedShipping,
-    selectedLocation,
-    removeFilter
-  } = useActiveFilters(); // ausgewählte Filter aus dem custom hook holen
+  const { selectedCategory, selectedSubcategory, selectedSize, selectedColor, selectedShipping, removeFilter } =
+    useActiveFilters(); // ausgewählte Filter aus dem custom hook holen
   const { searchTerm, setSearchTerm } = useContext(SearchContext);
 
   return (
@@ -24,7 +17,6 @@ export const ActiveFilters = () => {
         selectedColor.length === 0 &&
         selectedSubcategory.length === 0 &&
         !selectedShipping &&
-        selectedLocation.length === 0 &&
         !searchTerm && <span className="text-gray-500 text-sm">Keine aktiven Filter</span>}
 
       {/* Alle aktiven Filter anzeigen */}
@@ -72,13 +64,6 @@ export const ActiveFilters = () => {
             </span>
           </li>
         )}
-        {selectedLocation.map((location, index) => (
-          <li key={index} className="mb-2 cursor-pointer" onClick={() => removeFilter('location', location)}>
-            <span className="hover:bg-custom-text-green hover:text-white text-custom-text-brown border border-custom-text-green px-2 py-1 text-sm rounded-full flex items-center gap-1 w-max">
-              {location} <IoClose className="text-lg" />
-            </span>
-          </li>
-        ))}
       </ul>
     </div>
   );

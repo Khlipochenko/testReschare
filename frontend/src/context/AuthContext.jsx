@@ -8,7 +8,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loadingUser, setLoadingUser] = useState(true);
-  const [loggingOut, setLoggingOut] = useState(false); 
+
   const url = import.meta.env.VITE_API_URL;
 
   // Beim Laden prüfen, ob ein Token existiert (Benutzer bleibt eingeloggt)
@@ -85,7 +85,6 @@ export const AuthProvider = ({ children }) => {
 
       toast.success('Login successful');
       await fetchUserData();
-      setLoggingOut(false)
       return true;
       //  window.location.reload(); // Refresh to trigger `useAuth`
     } catch (error) {
@@ -101,7 +100,6 @@ export const AuthProvider = ({ children }) => {
     try {
       await API.get('/api/users/google');
       await fetchUserData();
-      setLoggingOut(false)
     } catch (error) {
       console.error('Google-Login fehlgeschlagen:', error);
     }
@@ -113,7 +111,6 @@ export const AuthProvider = ({ children }) => {
       await API.post('/api/users/logout');
       Cookies.remove('token');
       setUser(null);
-      setLoggingOut(true)
     } catch (error) {
       console.error('Logout fehlgeschlagen:', error);
     }
@@ -173,9 +170,7 @@ export const AuthProvider = ({ children }) => {
         register,
         requestPasswordReset,
         resetPassword,
-        fetchUserData,
-        loggingOut,
-        setLoggingOut
+        fetchUserData
       }}
     >
       {children}

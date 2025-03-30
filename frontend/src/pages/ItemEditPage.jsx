@@ -1,32 +1,34 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from "react";
 
-import { Size } from '../components/Item/Size';
-import { Category } from '../components/Item/Category';
-import { Fotos } from '../components/Item/Fotos';
-import { Ort } from '../components/Item/Ort';
-import { toast } from 'react-toastify';
-import { CircularProgress } from '@mui/material';
+import { Size } from "../components/Item/Size";
+import { Category } from "../components/Item/Category";
+import { Fotos } from "../components/Item/Fotos";
+import { Ort } from "../components/Item/Ort";
+import { toast } from "react-toastify";
+import { CircularProgress } from "@mui/material";
 
-import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Color } from '../components/Item/Color';
-import { Shipping } from '../components/Item/Shipping';
-import { Vorschau } from '../components/Item/Vorschau';
-import { ItemsContext } from '../context/ItemsContext';
+import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Color } from "../components/Item/Color";
+import { Shipping } from "../components/Item/Shipping";
+import { Vorschau } from "../components/Item/Vorschau";
+import { ItemsContext } from "../context/ItemsContext";
 
-export const ItemEditPage = ({ userId }) => {
+export const ItemEditPage = ({userId}) => {
   const { id } = useParams();
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [categoryActiv, setCategoryActiv] = useState('');
-  const [subcategory, setSubCategory] = useState('');
-  const [size, setSize] = useState('');
+
+
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [categoryActiv, setCategoryActiv] = useState("");
+  const [subcategory, setSubCategory] = useState("");
+  const [size, setSize] = useState("");
   const [fotos, setFotos] = useState([]);
-  const [fotosUrl, setFotosUrl] = useState([]);
-  const [ort, setOrt] = useState('');
+  const [fotosUrl, setFotosUrl]=useState([])
+  const [ort, setOrt] = useState("");
   const [colors, setColors] = useState([]);
   const [isLoading, setIsloading] = useState(false);
-  const [shipping, setShipping] = useState('Versand möglich');
-  const [status, setStatus] = useState('');
+  const [shipping, setShipping] = useState("Versand möglich");
+  const [status, setStatus]=useState('')
   const [showVorshau, setShowVorshau] = useState(false);
   const [errors, setErrors] = useState({
     title: false,
@@ -35,16 +37,13 @@ export const ItemEditPage = ({ userId }) => {
     description: false,
     fotos: false,
     colors: false,
-    fotosUrl: false
+    fotosUrl:false
   });
 
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { url, fetchUserItems } = useContext(ItemsContext);
 
-  useEffect(() => {
-    window.scrollTo(0, 0); // Scrollt nach oben
-  }, []);
+  const navigate = useNavigate();
+const location=useLocation()
+  const { url, fetchUserItems } = useContext(ItemsContext);
 
   //Prüfen ob es alle Felder ausfüllen
   function benötigteFelderPrüfen() {
@@ -53,21 +52,24 @@ export const ItemEditPage = ({ userId }) => {
       categoryActiv: !categoryActiv,
       size: !size,
       description: !description,
-      fotos: fotos.length === 0,
+      fotos: fotos.length=== 0,
       colors: colors.length === 0,
-      fotosUrl: fotosUrl.length === 0
+      fotosUrl:fotosUrl.length===0
+
+      
     };
     setErrors(newErrors);
     if (
       !title ||
       !categoryActiv ||
       !size ||
-      (fotos.length === 0 && fotosUrl.length === 0) ||
+      (fotos.length === 0&&fotosUrl.length===0)
+       ||
       !description ||
       colors.length === 0
     ) {
-      toast.dismiss();
-      toast.error('Alle Felder mit * sollen ausgefüllt werden');
+      toast.dismiss()
+      toast.error("Alle Felder mit * sollen ausgefüllt werden");
       return false;
     }
     return true;
@@ -86,8 +88,8 @@ export const ItemEditPage = ({ userId }) => {
   const fetchItem = async () => {
     try {
       const response = await fetch(`${url}/api/items/user/${id}`, {
-        method: 'GET',
-        credentials: 'include'
+        method: "GET",
+        credentials: "include",
       });
       // if (!response.ok) {
       //   throw new Error(response.status);
@@ -98,15 +100,16 @@ export const ItemEditPage = ({ userId }) => {
         setDescription(result.item.description);
         setCategoryActiv(result.item.category);
         setSubCategory(result.item.subcategory);
-        setFotosUrl(result.item.images);
+        setFotosUrl(result.item.images)
         setSize(result.item.size);
-        setOrt(result.item.location);
+        setOrt(result.item.ort);
         setColors(result.item.color);
         setShipping(result.item.shipping);
-        setStatus(result.item.status);
+        setStatus(result.item.status)
       } else {
-        if (result.message === 'No token provided') toast.error('Bitte melden Sie sich an!');
-        navigate('/login', { state: { from: location.pathname } });
+        if(result.message==='No token provided')
+        toast.error('Bitte melden Sie sich an!')
+        navigate('/login', {state:{from: location.pathname}})
       }
     } catch (e) {
       console.log(e);
@@ -122,36 +125,42 @@ export const ItemEditPage = ({ userId }) => {
 
     try {
       const formData = new FormData();
-      formData.append('title', title.trim());
+      formData.append("title", title.trim());
 
-      formData.append('description', description.trim());
+      formData.append("description", description.trim());
 
-      formData.append('category', categoryActiv);
-      formData.append('subcategory', subcategory);
-      formData.append('size', size);
+      formData.append("category", categoryActiv);
+      formData.append("subcategory", subcategory);
+      formData.append("size", size);
       colors.forEach((color) => {
-        formData.append('color', JSON.stringify({ colorcode: color.colorcode, name: color.name }));
+        formData.append(
+          "color",
+          JSON.stringify({ colorcode: color.colorcode, name: color.name })
+        );
       });
-      formData.append('shipping', shipping);
+      formData.append("shipping", shipping);
 
       if (ort.city && ort.country) {
-        formData.append('ort', JSON.stringify({ city: ort.city, country: ort.country }));
+        formData.append(
+          "ort",
+          JSON.stringify({ city: ort.city, country: ort.country })
+        );
       }
       if (fotos.length > 0) {
         fotos.forEach((img) => {
-          formData.append('images', img);
+          formData.append("images", img);
         });
       }
       if (fotosUrl.length > 0) {
         fotosUrl.forEach((img) => {
-          formData.append('imagesUrl', img);
+          formData.append("imagesUrl", img);
         });
       }
       setIsloading(true);
       const response = await fetch(`${url}/api/items/edit/${id}`, {
-        method: 'PUT',
-        credentials: 'include',
-        body: formData
+        method: "PUT",
+        credentials:'include',
+        body: formData,
       });
 
       // if (!response.ok) {
@@ -160,21 +169,22 @@ export const ItemEditPage = ({ userId }) => {
       //   return
       // }
       const result = await response.json();
-
-      if (!result.success) {
-        setIsloading(false);
-        if (result.message === 'No token provided') {
-          navigate('/login', { state: { from: location.pathname } });
-          toast.dismiss();
-          return toast.error('Um einen Artikel zu bearbeiten, melde dich bitte an!');
-        }
+     
+        if (!result.success) {
+          setIsloading(false);
+           if(result.message==='No token provided'){
+          ;
+          navigate('/login', {state:{from: location.pathname}})
+         toast.dismiss()
+         return toast.error('Um einen Artikel zu bearbeiten, melde dich bitte an!')
+       }   
       } else {
         setIsloading(false);
-        fetchUserItems(userId);
+        fetchUserItems(userId)
         toast.success(result.message);
-
+     
         navigate(-1);
-        window.scrollTo(0, 0);
+        window.scrollTo(0, 0)
       }
     } catch (e) {
       setIsloading(false);
@@ -195,6 +205,7 @@ export const ItemEditPage = ({ userId }) => {
     shipping,
     subcategory,
     status
+    
   };
   useEffect(() => {
     fetchItem();
@@ -202,7 +213,7 @@ export const ItemEditPage = ({ userId }) => {
   return (
     <>
       {isLoading && (
-        <div className="fixed inset-0 h-screen w-screen backdrop-blur-sm bg-black/30 flex flex-col justify-center items-center z-50  ">
+        <div className="fixed inset-0 h-screen w-screen backdrop-blur-sm bg-black/30 flex flex-col justify-center items-center z-50 ">
           <CircularProgress />
         </div>
       )}
@@ -211,10 +222,16 @@ export const ItemEditPage = ({ userId }) => {
           <Vorschau item={item} setShowVorshau={setShowVorshau}></Vorschau>
         </div>
       )}
-      <div className="w-screen flex justify-center items-center pt-40 pb-11">
+      <div className="w-screen bg-custom-bg-page flex justify-center items-center pt-36 ">
         <div className="flex  pt-10 justify-center items-center flex-col text-custom-text-green bg-white max-lg:w-4/5 w-2/4 rounded shadow">
-          <h1 className="text-3xl font-medium max-sm:text-xl"> Artikel verschenken</h1>
-          <form className="flex flex-col w-7/12 max-md:w-4/6 max-sm:w-5/6 mt-4" onSubmit={(e) => handleOnSubmitForm(e)}>
+          <h1 className="text-3xl font-medium max-sm:text-xl">
+            {" "}
+            Artikel schenken
+          </h1>
+          <form
+            className="flex flex-col w-7/12 max-md:w-4/6 max-sm:w-5/6 mt-4"
+            onSubmit={(e) => handleOnSubmitForm(e)}
+          >
             <label className="mb-2 mt-6" htmlFor="titel">
               Titel: <span className="text-custom-highlight-cherryred">*</span>
             </label>
@@ -228,11 +245,12 @@ export const ItemEditPage = ({ userId }) => {
               }}
               placeholder="z.B. Hose"
               className={`p-2 rounded shadow outline-custom-text-lightgreen mb-3 border ${
-                errors.title ? 'border-custom-highlight-cherryred' : ''
+                errors.title ? "border-custom-highlight-cherryred" : ""
               }`}
             />
             <label className="mb-2 mt-3 " htmlFor="beschreibung">
-              Beschreibung: <span className="text-custom-highlight-cherryred">*</span>
+              Beschreibung:{" "}
+              <span className="text-custom-highlight-cherryred">*</span>
             </label>
             <textarea
               value={description}
@@ -243,7 +261,7 @@ export const ItemEditPage = ({ userId }) => {
               name="beschreibung"
               id="beschreibung"
               className={`rounded shadow outline-custom-text-lightgreen min-h-32 p-2 border ${
-                errors.description ? 'border-custom-highlight-cherryred' : ''
+                errors.description ? "border-custom-highlight-cherryred" : ""
               }`}
             ></textarea>
             <Category
@@ -265,19 +283,27 @@ export const ItemEditPage = ({ userId }) => {
                   setErrors={setErrors}
                   new={false}
                 />
-                <Color colors={colors} setColors={setColors} errors={errors} setErrors={setErrors}></Color>
+                <Color
+                  colors={colors}
+                  setColors={setColors}
+                  errors={errors}
+                  setErrors={setErrors}
+                ></Color>
               </>
             )}
 
-            <Ort ort={ort} setOrt={setOrt} new={false}></Ort>
+            <Ort ort={ort}
+             setOrt={setOrt}
+             new={false}
+             ></Ort>
             <Shipping shipping={shipping} setShipping={setShipping}></Shipping>
             <h1 className="mt-6">
               Bilder (max 6): <span className="text-custom-highlight-cherryred">*</span>
             </h1>
 
             <Fotos
-              fotosUrl={fotosUrl}
-              setFotosUrl={setFotosUrl}
+            fotosUrl={fotosUrl}
+            setFotosUrl={setFotosUrl}
               fotos={fotos}
               setFotos={setFotos}
               errors={errors}
@@ -293,16 +319,10 @@ export const ItemEditPage = ({ userId }) => {
                 Vorschau
               </button>
               <button className="tracking-wider shadow p-2 rounded-lg bg-custom-text-brown text-white font-medium  sm:hover:bg-custom-text-grey">
-                Aktualisieren
+              Aktualisieren
               </button>
-
-              <NavLink
-                to={'/user/items/meine-artikel'}
-                onChangeCapture={() => window.scrollTo(0, 0)}
-                className="tracking-wider shadow p-2 rounded-lg bg-custom-highlight-cherryred text-center text-white font-medium  sm:hover:bg-custom-text-grey"
-              >
-                Zurück
-              </NavLink>
+             
+              <NavLink to={'/user/items/userId'} className="tracking-wider shadow p-2 rounded-lg bg-custom-highlight-cherryred text-center text-white font-medium  sm:hover:bg-custom-text-grey">Zurück</NavLink> 
             </div>
           </form>
         </div>
