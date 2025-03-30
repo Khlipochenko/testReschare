@@ -1,16 +1,25 @@
+import { useEffect } from 'react';
+
 export const HomePage = () => {
-  const reshare = ['r', 'e', 's', 'h', 'a', 'r', 'e']
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scrollt nach oben
+  }, []);
+  const reshare = ['r', 'e', 's', 'h', 'a', 'r', 'e'];
   return (
     <>
-      <div className="
+      <div
+        className="
           relative
           overscroll-contain
           h-screen
           w-100
-          ">
-        <div className="
+          "
+      >
+        <div
+          className="
               bg-[url(./assets/top.jpg)] 
               bg-center
+              md:bg-top
               bg-clip-content
               bg-cover 
               absolute 
@@ -18,10 +27,10 @@ export const HomePage = () => {
               bg-transparent
               opacity-80
               
-              ">
-
-        </div>
-        <div className="
+              "
+        ></div>
+        <div
+          className="
               absolute
               flex
               items-center
@@ -39,7 +48,8 @@ export const HomePage = () => {
               xl:left-40
               xl:text-9xl
               xl:gap-24 
-              ">
+              "
+        >
           {reshare.map((letter, index) => (
             <p
               key={index}
@@ -60,5 +70,5 @@ export const HomePage = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};

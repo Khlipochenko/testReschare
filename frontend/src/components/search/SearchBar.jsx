@@ -34,12 +34,12 @@ export const SearchBar = ({ isHomePage, isScrolled }) => {
   return showSearch ? (
     <div
       className={`flex w-full items-center justify-center text-center text-custom-darkgreen  z-40 ${
-        isHomePage && !isScrolled ? 'absolute top-24 left-0 bg-transparent' : 'bg-custom-bg-page border-y'
+        isHomePage && !isScrolled ? 'absolute top-24 left-0 bg-transparent' : 'bg-custom-bg-footer border-y'
       }`}
     >
       <form
         onSubmit={handleSearch}
-        className="inline-flex items-center justify-center bg-white border px-5 py-2 my-4  mx-3 rounded-full w-3/4 sm:w-1/2"
+        className="inline-flex items-center justify-center bg-white border px-5 py-2 my-4  mx-3 rounded-md w-3/4 sm:w-1/2"
       >
         <input
           className="flex-1 outline-none bg-inherit text-lg"

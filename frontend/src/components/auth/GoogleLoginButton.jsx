@@ -22,9 +22,7 @@ const GoogleLoginButton = () => {
     </button>
   );
 };
-
 export default GoogleLoginButton;
-
 
 
 

@@ -10,15 +10,20 @@ export const getSearchItems = async (req, res, next) => {
     const category = req.query.category ?? '';
     const subcategory = req.query.subcategory ?? '';
     const size = req.query.size ?? '';
-    const color = req.query.color ?? '';
+    const color = req.query.color ?? [];
     const shipping = req.query.shipping ?? '';
     const sort = req.query.sort ?? '';
+    const location = req.query.location ?? '';
 
     const currentPage = parseInt(req.query.page ?? '1');
     const itemsPerPage = parseInt(req.query.limit ?? '12');
 
     // Filter
-    let filter = createFilter({ category, subcategory, size, color, shipping });
+    let filter = createFilter({ category, subcategory, size, color, location, shipping });
+
+    // if (city) {
+    //   filter['ort.city'] = { $in: city.split(',') };
+    // }
 
     let { searchItems, totalItemsCount, availableFilters } = await searchItemsInDB(
       filter,
@@ -49,16 +54,21 @@ export const getCategorySearchItems = async (req, res, next) => {
     const searchQuery = req.query.q ?? '';
     const subcategory = req.query.subcategory ?? '';
     const size = req.query.size ?? '';
-    const color = req.query.color ?? '';
+    const color = req.query.color ?? [];
     const shipping = req.query.shipping ?? '';
     const sort = req.query.sort ?? '';
+    const location = req.query.location ?? '';
 
     const currentPage = parseInt(req.query.page ?? '1');
     const itemsPerPage = parseInt(req.query.limit ?? '12');
 
     // Filter erstellen
-    let filter = createFilter({ subcategory, size, color, shipping });
+    let filter = createFilter({ subcategory, size, color, location, shipping });
     filter.category = category;
+
+    // if (city) {
+    //   filter['ort.city'] = { $in: city.split(',') };
+    // }
 
     let { searchItems, totalItemsCount, availableFilters } = await searchItemsInDB(
       filter,

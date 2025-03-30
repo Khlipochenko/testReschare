@@ -137,9 +137,10 @@ export const OneItem = ({ item, showButton=false , isMyItem=false, fetchOneItem=
            
            <DeleteItemButton itemId={item._id} fetchOneItem={fetchOneItem}   ></DeleteItemButton>
            <button onClick={()=>{
+            window.scrollTo(0, 0)
             navigate(-1)
         //  navigate(from, { replace: true } )
-        window.scrollTo(0, 0)}} className="px-4 py-2 bg-custom-text-brown text-white rounded-md inline-block sm:hover:bg-custom-text-grey tracking-wider">Zurück</button>
+        }} className="px-4 py-2 bg-custom-text-brown text-white rounded-md inline-block sm:hover:bg-custom-text-grey tracking-wider">Zurück</button>
         </div>
         
         : null}

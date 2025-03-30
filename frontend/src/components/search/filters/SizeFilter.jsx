@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import { FilterContext } from '../../../context/FilterContext';
-import { ToggleDropdown } from './ToggleDropdown';
 import { useToggleFilter } from '../../../hooks/useToggleFilter';
 import { FilterButton } from './FilterButton';
+import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
+import { useToggleMenu } from '../../../hooks/useToggleMenu';
 
 const customSizeOrder = [
   '50-56 (Neugeborene)',
@@ -38,6 +39,7 @@ const customSizeOrder = [
 export const SizeFilter = () => {
   const { setSelectedSize, availableFilters, pendingFilters } = useContext(FilterContext);
   const { togglePendingFilter } = useToggleFilter();
+  const { showMenu, toggleMenu } = useToggleMenu(false);
 
   const availableSizes = availableFilters.sizes;
 
@@ -45,12 +47,19 @@ export const SizeFilter = () => {
 
   const applyFilters = () => {
     setSelectedSize(pendingFilters.size);
+    toggleMenu(); // Dropdown schließen nach Anwenden
+    window.scrollTo(0, 0);
   };
 
   return (
-    <ToggleDropdown title="Größe">
-      {
-        <>
+    <div>
+      <button className="flex items-center justify-between w-full cursor-pointer" onClick={toggleMenu}>
+        <h2 className="text-xl font-medium text-custom-text-brown">Größe</h2>
+        {showMenu ? <RiArrowDropUpLine className="text-3xl" /> : <RiArrowDropDownLine className="text-3xl" />}
+      </button>
+
+      {showMenu && (
+        <div className="transition-all duration-200 ease-in-out overflow-hidden text-lg mt-4">
           <div className="flex flex-col gap-2 font-light text-custom-text-grey pl-4">
             {sortedSizes.map((size) => (
               <label key={size} className="flex gap-2 cursor-pointer">
@@ -68,8 +77,8 @@ export const SizeFilter = () => {
             ))}
           </div>
           <FilterButton onClick={applyFilters}>Anwenden</FilterButton>
-        </>
-      }
-    </ToggleDropdown>
+        </div>
+      )}
+    </div>
   );
 };
