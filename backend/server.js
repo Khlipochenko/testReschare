@@ -26,7 +26,7 @@ app.use(express.json());
 app.use(
   cors({
     credentials: true,
-    origin: process.env.ORIGIN || "http://localhost:5173",
+    origin: [process.env.ORIGIN],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
   })
@@ -38,6 +38,7 @@ await connectCloudinary();
 app.use(passport.initialize());
 
 
+
 //Routers
 app.use("/api/users", userRouter);
 app.use('/api/items', itemRouter)
@@ -47,11 +48,8 @@ app.use('/api/search', searchRouter)
 app.use('/api/messages', messageRouter);
 app.use('/api/inbox', inboxRouter)
 app.get("/", (req, res) => res.send("API Working"));
-app.use((req, res, next) => {
-  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-  res.set('Pragma', 'no-cache');
-  next();
-});
+res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+res.set('Pragma', 'no-cache');
 app.use(errorMiddleware)
 const PORT = process.env.PORT || 6000;
 
