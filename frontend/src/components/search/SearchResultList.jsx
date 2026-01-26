@@ -18,14 +18,13 @@ export const SearchResultList = () => {
   }
 
   return (
-    <div className="pb-10">
-      {' '}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
+    <div>
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 gap-y-6">
         {filteredItems?.length > 0 ? (
           filteredItems.map((item) => <ItemCard key={item._id} item={item} />)
         ) : (
-          <div className="col-span-full flex justify-center items-center mt-20 text-lg text-custom-text-brown">
-            <p>Keine Artikel gefunden.</p>
+          <div className="col-span-full flex justify-center items-center mt-20 text-xl text-custom-text-brown">
+            <p>Keine Artikel gefunden</p>
           </div>
         )}
       </div>

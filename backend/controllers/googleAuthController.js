@@ -17,11 +17,16 @@ export const googleAuthCallback = (req, res) => {
     res.cookie("token", token, {
         httpOnly: true,
         secure: true,
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        sameSite: 'None',
         maxAge: 3600000, 
     });
+    if (req.headers.accept.includes('application/json')) {
+  res.status(200).json({ success: true, user: req.user });
+} else {
+  res.redirect(process.env.ORIGIN);
+}
+    //res.redirect(process.env.ORIGIN);
     
-    res.redirect(process.env.ORIGIN);
 };
 
 

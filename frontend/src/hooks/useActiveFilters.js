@@ -41,7 +41,7 @@ export const useActiveFilters = () => {
     } else if (filter === 'color') {
       setSelectedColor(selectedColor.filter((item) => item !== value));
     } else if (filter === 'location') {
-      setSelectedColor(selectedLocation.filter((item) => item !== value));
+      setSelectedLocation(selectedLocation.filter((item) => item !== value));
     } else if (filter === 'shipping') {
       setSelectedShipping('');
     } else if (filter === 'searchTerm') {

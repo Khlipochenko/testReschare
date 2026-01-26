@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { ColorFilter } from './ColorFilter';
 import { SizeFilter } from './SizeFilter';
 import { FaFilter, FaTimes } from 'react-icons/fa';
@@ -6,20 +6,19 @@ import { ShippingFilter } from './ShippingFilter';
 import { Sort } from '../Sort';
 import { useActiveFilters } from '../../../hooks/useActiveFilters';
 import { ActiveFilters } from './ActiveFilters';
-import { FilterContext } from '../../../context/FilterContext';
 import { SubcategoryFilter } from './SubcategoryFilter';
 import { CategoryFilter } from './CategoryFilter';
 import { LocationFilter } from './LocationFilter';
 
 export const Filters = ({ isSearchResultPage }) => {
-  const { showFilter, setShowFilter } = useContext(FilterContext);
+  const [showFilter, setShowFilter] = useState(false);
   const { clearAllFilters, hasActiveFilters } = useActiveFilters();
 
   return (
     <>
       {/* Mobile Ansicht */}
       {/* Filter-Button für mobile Ansicht */}
-      <div className="flex items-center justify-between md:hidden gap-2 text-custom-text-brown">
+      <div className="flex items-center justify-between md:hidden gap-2">
         <Sort />
 
         <button
@@ -33,12 +32,12 @@ export const Filters = ({ isSearchResultPage }) => {
 
       {/* Filter Sidebar Menü für mobile Ansicht */}
       <div
-        className={`fixed top-0 left-0 w-4/6 max-w-sm h-screen bg-white md:bg-custom-bg-page shadow-xl transition-all duration-500 ease-in-out overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 z-50 ${
+        className={`fixed top-0 left-0 w-4/6 max-w-sm h-screen bg-white md:bg-custom-bg-page shadow-xl transition-all duration-500 ease-in-out z-50 ${
           showFilter ? 'translate-x-0' : '-translate-x-full'
         } md:hidden`}
       >
         {/* Close Button für mobile Ansicht */}
-        <div className="sticky top-0 w-full md:hidden">
+        <div className="w-full md:hidden">
           <div className=" bg-custom-text-green pl-6 py-2 text-white flex justify-between items-center">
             {' '}
             <h3 className="text-xl">Filter</h3>
@@ -92,7 +91,7 @@ export const Filters = ({ isSearchResultPage }) => {
       </div>
 
       {/* Desktop Ansicht */}
-      <div className="hidden md:flex flex-col h-screen max-h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 md:w-1/6 md:min-w-64">
+      <div className="hidden md:flex flex-col pr-2 h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 w-1/5 min-w-56">
         {hasActiveFilters && (
           <div className="order-first py-4 pr-2 border-b-2">
             <div className="flex justify-between items-center text-custom-text-brown">

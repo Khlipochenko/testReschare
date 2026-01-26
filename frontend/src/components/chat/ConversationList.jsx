@@ -42,7 +42,7 @@ export const ConversationList = () => {
         if (foundConversation) {
             const chatContact = foundConversation.participants.find(p => p._id !== user?._id);
 
-            if (chatContact) {
+            if (chatContact && user) {
                 console.log("✅ Found conversation participants:", foundConversation);
                 navigate(`/chat?conversationId=${foundConversation._id}&receiverId=${chatContact._id}`);
             }
@@ -95,7 +95,7 @@ export const ConversationList = () => {
     }
 
     return (
-        <div className="w-full text-center h-full bg-white/10 backdrop-blur-sm p-6 rounded-lg shadow-lg overflow-auto items-center">
+        <div className="w-full text-center h-[550px] bg-white/10 backdrop-blur-sm p-6 rounded-lg shadow-lg overflow-auto items-center">
             <h2>Conversation List</h2>
             {conversations.length > 0 ? (
                 conversations.map((conversation) => {

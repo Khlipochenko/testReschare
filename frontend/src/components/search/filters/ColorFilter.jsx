@@ -1,9 +1,6 @@
 import React, { useContext } from 'react';
 import { FilterContext } from '../../../context/FilterContext';
-import { useToggleFilter } from '../../../hooks/useToggleFilter';
-import { FilterButton } from './FilterButton';
 import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
-import { useToggleMenu } from '../../../hooks/useToggleMenu';
 
 const customColorOrder = [
   { colorcode: '#000000', name: 'Schwarz' },
@@ -22,54 +19,65 @@ const customColorOrder = [
 ];
 
 export const ColorFilter = () => {
-  const { setSelectedColor, availableFilters, pendingFilters } = useContext(FilterContext);
-  const { togglePendingFilter } = useToggleFilter();
-  const { showMenu, toggleMenu } = useToggleMenu(false);
+  const { setSelectedColor, selectedColor, openFilters, toggleFilterMenu, allFilters } = useContext(FilterContext);
 
-  const availableColors = availableFilters.colors;
-  // console.log(availableFilters.colors);
+  const allColors = allFilters.colors || [];
 
-  const sortedColors = availableColors.sort(
-    (a, b) =>
-      customColorOrder.findIndex((color) => color.name === a.name) -
-      customColorOrder.findIndex((color) => color.name === b.name)
-  );
+  const sortedColors =
+    allColors.length > 0
+      ? allColors.sort(
+          (a, b) =>
+            customColorOrder.findIndex((color) => color.name === a.name) -
+            customColorOrder.findIndex((color) => color.name === b.name)
+        )
+      : customColorOrder;
 
-  const applyFilters = () => {
-    setSelectedColor(pendingFilters.color);
-    toggleMenu();
+  const toggleCheckbox = (filterValue) => {
+    setSelectedColor(
+      (prev) =>
+        prev.includes(filterValue)
+          ? prev.filter((item) => item !== filterValue) // Entfernt den Filter
+          : [...prev, filterValue] // Fügt den Filter hinzu
+    );
+    //toggleFilterMenu('subcategory'); // Dropdown schließen nach Anwenden
     window.scrollTo(0, 0);
   };
 
   return (
     <div>
-      <button className="flex items-center justify-between w-full cursor-pointer" onClick={toggleMenu}>
+      <button
+        className="flex items-center justify-between w-full cursor-pointer"
+        onClick={() => toggleFilterMenu('color')}
+      >
         <h2 className="text-xl font-medium text-custom-text-brown">Farbe</h2>
-        {showMenu ? <RiArrowDropUpLine className="text-3xl" /> : <RiArrowDropDownLine className="text-3xl" />}
+        {openFilters.color ? <RiArrowDropUpLine className="text-3xl" /> : <RiArrowDropDownLine className="text-3xl" />}
       </button>
 
-      {showMenu && (
+      {openFilters.color && (
         <div className="transition-all duration-200 ease-in-out overflow-hidden text-lg mt-4">
           <div className="flex flex-wrap gap-2 px-4 py-2">
-            {sortedColors.map((color) => (
-              <label key={color.name} className="relative">
-                <input
-                  className="hidden"
-                  type="checkbox"
-                  value={color.name}
-                  checked={pendingFilters.color.includes(color.name)}
-                  onChange={() => togglePendingFilter(color.name, 'color')}
-                />
-                <div
-                  className={`w-8 h-8 rounded-full border border-gray-300 cursor-pointer transition-all hover:scale-105 ${
-                    pendingFilters.color.includes(color.name) ? 'outline outline-2 outline-orange-500' : ''
-                  }`}
-                  style={{ background: color.colorcode }}
-                ></div>
-              </label>
-            ))}
+            {sortedColors.length > 0 ? (
+              sortedColors.map((color) => (
+                <label key={color.name} className="relative">
+                  <input
+                    className="hidden"
+                    type="checkbox"
+                    value={color.name}
+                    checked={selectedColor.includes(color.name)}
+                    onChange={() => toggleCheckbox(color.name)}
+                  />
+                  <div
+                    className={`w-8 h-8 rounded-full border border-gray-300 cursor-pointer transition-all hover:scale-105 ${
+                      selectedColor.includes(color.name) ? 'outline outline-2 outline-orange-500' : ''
+                    }`}
+                    style={{ background: color.colorcode }}
+                  ></div>
+                </label>
+              ))
+            ) : (
+              <p>Keine Farbe verfügbar</p>
+            )}
           </div>
-          <FilterButton onClick={applyFilters}>Anwenden</FilterButton>
         </div>
       )}
     </div>

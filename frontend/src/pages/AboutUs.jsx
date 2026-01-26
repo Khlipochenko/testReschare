@@ -1,7 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import img from '/bild.jpg';
-import panova from '/Panova.jpg';
+import natalia from '/Natalia.jpg';
 import chrissi from '/Chrissi.jpg';
+import ming from '/Ming.png';
+import ines from '/Ines.jpg';
+import lara from '/Lara.png';
+
 import { AboutUsCardTeam } from '../components/aboutUs/AboutUsCardTeam';
 import { ToolCard } from '../components/aboutUs/ToolCard';
 import '../components/aboutUs/AboutUs.css';
@@ -59,28 +63,28 @@ export const AboutUs = () => {
     },
     {
       name: 'Ines Messelmani',
-      image: img,
+      image: ines,
       github: 'https://github.com/dci1234ines',
       linkedin: 'https://www.linkedin.com/in/ines-messelmani-47a113348/',
       title: 'Full Stack Developer'
     },
     {
       name: 'Mi-Young Wessels',
-      image: img,
+      image: ming,
       github: 'https://github.com/MingWessels',
       linkedin: '#',
       title: 'Full Stack Developer'
     },
     {
       name: 'Ioana-Larisa Kempf',
-      image: img,
+      image: lara,
       github: 'https://github.com/LaraKempf',
       linkedin: '#',
       title: 'Full Stack Developer'
     },
     {
       name: 'Natalia Panova',
-      image: panova,
+      image: natalia,
       github: 'https://github.com/Khlipochenko',
       linkedin: 'https://www.linkedin.com/in/natalia-panova-5aa8a0346/',
       title: 'Full Stack Developer'
@@ -126,11 +130,11 @@ export const AboutUs = () => {
       <div className="mt-10">
         <h1 className="text-xl my-4 text-center text-custom-text-brown font-medium">Über uns</h1>
         <div>
-          <p className="mb-6 text-justify">
-            Diese Tauschbörse ist das Ergebnis unseres Abschlussprojekts im Webentwicklungs-Kurs. Mit viel Leidenschaft
-            und Teamarbeit haben wir eine Plattform geschaffen, die nicht nur den Austausch von Artikeln ermöglicht,
-            sondern auch unsere erworbenen Fähigkeiten in modernen Webtechnologien widerspiegelt. Sie steht für unseren
-            Lernprozess, unser Engagement und unsere Zukunft als Entwickler!
+          <p className="mb-6 text-center ">
+            Diese nachhaltige Schenkbörse ist das Ergebnis unseres Abschlussprojekts im Webentwicklungs-Kurs des Digital
+            Career Institutes. Mit viel Leidenschaft und Teamarbeit haben wir eine Plattform geschaffen, die nicht nur
+            einen guten Zweck erfüllt, sondern auch unsere erworbenen Fähigkeiten in modernen Webtechnologien
+            widerspiegelt. Sie steht für unseren Lernprozess, unser Engagement und unsere Zukunft als Entwickler!
           </p>
         </div>
       </div>

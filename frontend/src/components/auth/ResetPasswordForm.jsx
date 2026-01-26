@@ -1,4 +1,3 @@
-
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -13,7 +12,7 @@ const ResetPasswordForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      toast.dismiss()
+      toast.dismiss();
       toast.error('Passwörter stimmen nicht überein!');
       return;
     }
@@ -24,7 +23,7 @@ const ResetPasswordForm = () => {
         toast.success('Passwort erfolgreich zurückgesetzt!');
         navigate('/login', { replace: true }); // Direkt navigieren
       } else {
-      toast.dismiss()
+        toast.dismiss();
         toast.error(response?.message || 'Fehler beim Zurücksetzen des Passworts!');
       }
     } catch (error) {
@@ -33,11 +32,9 @@ const ResetPasswordForm = () => {
     }
   };
   return (
-    <div className="min-h-screen flex items-center justify-center bg-custom-bg-page">
+    <div className="min-h-screen flex items-center justify-center">
       <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-lg rounded-lg border border-gray-300">
-        <h1 className="text-2xl font-bold text-custom-text-green text-center">
-          Neues Passwort festlegen
-        </h1>
+        <h1 className="text-2xl font-bold text-custom-text-green text-center">Neues Passwort festlegen</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="password"
@@ -67,98 +64,4 @@ const ResetPasswordForm = () => {
   );
 };
 
-  
 export default ResetPasswordForm;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

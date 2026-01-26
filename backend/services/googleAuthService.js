@@ -24,8 +24,7 @@ passport.use(
           await user.save();
         }
         // JWT-Token generieren
-        const token = jwt.sign({ userId: user._id.toString() },
-         process.env.JWT_SECRET, { expiresIn: "1h" });
+        const token = jwt.sign({ userId: user._id.toString() }, process.env.JWT_SECRET, { expiresIn: "1h" });
        // console.log(user._id)
         return done(null, { user, token });
       } catch (error) {

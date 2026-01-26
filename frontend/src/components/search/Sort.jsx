@@ -17,7 +17,7 @@ export const Sort = () => {
 
   return (
     <div className="relative justify-end flex">
-      <div className="flex items-center py-2 text-xl text-custom-text-brown">
+      <div className="flex items-center py-2 text-xl">
         <p>Sortieren nach:</p>
         <button className="flex items-center ml-2" onClick={toggleMenu}>
           {sortOption || 'Wählen'}
@@ -45,23 +45,3 @@ export const Sort = () => {
     </div>
   );
 };
-
-// import React, { useContext } from 'react';
-// import { SearchContext } from '../../context/SearchContext';
-
-// export const Sort = () => {
-//   const { sortOption, setSortOption } = useContext(SearchContext);
-//   return (
-//     <div className="flex justify-end mb-2 mt-6">
-//       <select
-//         className=" text-custom-text-brown rounded-md text-lg px-3"
-//         value={sortOption}
-//         onChange={(e) => setSortOption(e.target.value)}
-//       >
-//         {/* <option value="relevant">Sortieren nach: Relevanz</option> */}
-//         <option value="neueste">Sortieren nach: Neueste</option>
-//         <option value="älteste">Sortieren nach: Älteste</option>
-//       </select>
-//     </div>
-//   );
-// };

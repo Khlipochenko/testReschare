@@ -16,6 +16,8 @@ export const useFilteredItems = () => {
     selectedShipping,
     availableFilters,
     setAvailableFilters,
+    allFilters,
+    setAllFilters,
     setTotalItemsCount
   } = useContext(FilterContext);
 
@@ -59,6 +61,10 @@ export const useFilteredItems = () => {
       }
 
       const data = await response.json();
+      console.log('Response data:', data);
+
+      console.log('Received availableFilters', data.availableFilters);
+      console.log('Received allFilters:', data.allFilters);
 
       setFilteredItems(data.searchItems);
       setTotalPages(data.totalPages);
@@ -66,6 +72,7 @@ export const useFilteredItems = () => {
       console.log('Received availableFilters:', data.availableFilters, data.totalItemsCount);
 
       setAvailableFilters(data.availableFilters);
+      setAllFilters(data.allFilters);
 
       // console.log('Gefilterte Items gesetzt:', data.searchItems);
     } catch (error) {
@@ -105,5 +112,5 @@ export const useFilteredItems = () => {
     currentPage
   ]);
 
-  return { filteredItems, totalPages, currentPage, loading, setCurrentPage, availableFilters };
+  return { filteredItems, totalPages, currentPage, loading, setCurrentPage, availableFilters, allFilters };
 };

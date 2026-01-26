@@ -113,7 +113,11 @@ export const ItemDetailsPage = () => {
             </p>
           )}
 
-          {itemLoading === 'loaded' && !item && <p>Der Artikel wurde nicht gefunden</p>}
+          {itemLoading === 'loaded' && !item && (
+            <div className="h-screen text-xl pt-24 text-custom-text-brown">
+              <p>Der Artikel wurde nicht gefunden</p>
+            </div>
+          )}
           {itemLoading === 'loaded' && item && (
             <>
               <div className="w-full border rounded-md p-4 shadow relative pt-9 mx-auto bg-white">

@@ -10,17 +10,35 @@ export const FilterProvider = ({ children }) => {
   const [selectedColor, setSelectedColor] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState([]);
   const [selectedShipping, setSelectedShipping] = useState('');
-  const [showFilter, setShowFilter] = useState(false);
-  const [openFilters, setOpenFilters] = useState({});
-  const [totalItemsCount, setTotalItemsCount] = useState(0);
+
+  const [openFilters, setOpenFilters] = useState({
+    category: false,
+    subcategory: false,
+    size: false,
+    color: false,
+    location: false,
+    shipping: false
+  });
+
   const [availableFilters, setAvailableFilters] = useState({
     categories: [],
     subcategories: [],
     sizes: [],
     colors: [],
-    location: [],
+    locations: [],
     shipping: ''
   });
+
+  // Alle Filter (alle möglichen Optionen aus der DB)
+  const [allFilters, setAllFilters] = useState({
+    categories: [],
+    subcategories: [],
+    sizes: [],
+    colors: [],
+    locations: [],
+    shipping: ''
+  });
+
   const [pendingFilters, setPendingFilters] = useState({
     category: [],
     subcategory: [],
@@ -30,9 +48,29 @@ export const FilterProvider = ({ children }) => {
     shipping: ''
   });
 
+  const [totalItemsCount, setTotalItemsCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+
   const { setSearchTerm } = useContext(SearchContext);
 
+  // Funktion zum Öffnen und Schließen der Filter
+  const toggleFilterMenu = (menuName) => {
+    setOpenFilters((prev) => {
+      const isCurrentlyOpen = prev[menuName];
+
+      return {
+        category: false,
+        subcategory: false,
+        size: false,
+        color: false,
+        location: false,
+        shipping: false,
+        [menuName]: !isCurrentlyOpen
+      };
+    });
+  };
+
+  // Funktion zum Löschen der aktiven Filter
   const clearAllFilters = () => {
     setSelectedCategory([]);
     setSelectedSubcategory([]);
@@ -49,11 +87,19 @@ export const FilterProvider = ({ children }) => {
       location: [],
       shipping: ''
     });
-    resetOpenFilters();
+    closeAllFilters();
   };
 
-  const resetOpenFilters = () => {
-    setOpenFilters({});
+  // Funktion zum Schließen aller Filter-Menüs
+  const closeAllFilters = () => {
+    setOpenFilters({
+      category: false,
+      subcategory: false,
+      size: false,
+      color: false,
+      location: false,
+      shipping: false
+    });
   };
 
   return (
@@ -73,19 +119,19 @@ export const FilterProvider = ({ children }) => {
         setSelectedShipping,
         availableFilters,
         setAvailableFilters,
-        clearAllFilters,
-        showFilter,
-        setShowFilter,
-        openFilters,
-        setOpenFilters,
-        resetOpenFilters,
-        totalItemsCount,
-        setTotalItemsCount,
+        allFilters,
+        setAllFilters,
         pendingFilters,
         setPendingFilters,
+        openFilters,
+        setOpenFilters,
+        totalItemsCount,
+        setTotalItemsCount,
         currentPage,
         setCurrentPage,
-        setSearchTerm
+        clearAllFilters,
+        closeAllFilters,
+        toggleFilterMenu
       }}
     >
       {children}

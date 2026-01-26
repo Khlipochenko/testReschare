@@ -11,17 +11,6 @@ export const ChatPage = ({ receiverId }) => {
 
   return (
     <>
-      {/* <div className="flex flex-col md:flex-row justify-center items-center min-h-screen w-full gap-1">
-          
-            <div className="w-[550px] md:w-96 h-1/2 md:h-[550px] overflow-auto">
-                <ConversationList />
-            </div>
-
-           
-            <div className="w-[550px] md:w-96 h-[550px]">
-                <ChatWindow />
-            </div>
-        </div> */}
 
       <div className="flex justify-center items-center min-h-screen px-2 pt-36 overflow-hidden">
         <div className="flex w-full max-w-5xl rounded-lg shadow-lg h-[550px] gap-1 ">
@@ -35,12 +24,8 @@ export const ChatPage = ({ receiverId }) => {
         </div>
       </div>
 
-      <div>
-        {/* <LoginForm className="flex mx-auto" />
-            <ChatStartButton itemId={'67c3950995175db456d73729'} /> */}
-        {/* hier item id dynamisch aus dem komponent */}
-      </div>
-      {/* <div className="animate-spin h-6 w-6 border-t-2 border-gray-500 rounded-full"></div> */}
+
+
     </>
   );
 };

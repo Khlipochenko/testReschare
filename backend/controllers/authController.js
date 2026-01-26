@@ -31,8 +31,8 @@ export const login = async (req, res) => {
     res.cookie('token', token, {
       httpOnly: true,
       //secure: false,
-      secure: process.env.NODE_ENV === 'production' ? true : false,
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      secure: true,
+      sameSite: 'None',
       maxAge: 3600000
     });
     res.status(200).json({ user });
@@ -40,6 +40,7 @@ export const login = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
+
 // FORGOT PASSWORD
 export const forgotPassword = async (req, res) => {
   try {

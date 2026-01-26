@@ -1,9 +1,6 @@
 import React, { useContext } from 'react';
 import { FilterContext } from '../../../context/FilterContext';
-import { useToggleFilter } from '../../../hooks/useToggleFilter';
-import { FilterButton } from './FilterButton';
 import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
-import { useToggleMenu } from '../../../hooks/useToggleMenu';
 
 const customSizeOrder = [
   '50-56 (Neugeborene)',
@@ -37,46 +34,56 @@ const customSizeOrder = [
 ];
 
 export const SizeFilter = () => {
-  const { setSelectedSize, availableFilters, pendingFilters } = useContext(FilterContext);
-  const { togglePendingFilter } = useToggleFilter();
-  const { showMenu, toggleMenu } = useToggleMenu(false);
+  const { setSelectedSize, selectedSize, availableFilters, pendingFilters, openFilters, toggleFilterMenu, allFilters } =
+    useContext(FilterContext);
 
-  const availableSizes = availableFilters.sizes;
+  const allSizes = allFilters.sizes || [];
 
-  const sortedSizes = availableSizes.sort((a, b) => customSizeOrder.indexOf(a) - customSizeOrder.indexOf(b));
+  const sortedSizes = allSizes.sort((a, b) => customSizeOrder.indexOf(a) - customSizeOrder.indexOf(b));
 
-  const applyFilters = () => {
-    setSelectedSize(pendingFilters.size);
-    toggleMenu(); // Dropdown schließen nach Anwenden
+  const toggleCheckbox = (filterValue) => {
+    setSelectedSize(
+      (prev) =>
+        prev.includes(filterValue)
+          ? prev.filter((item) => item !== filterValue) // Entfernt den Filter
+          : [...prev, filterValue] // Fügt den Filter hinzu
+    );
+    //toggleFilterMenu('subcategory'); // Dropdown schließen nach Anwenden
     window.scrollTo(0, 0);
   };
 
   return (
     <div>
-      <button className="flex items-center justify-between w-full cursor-pointer" onClick={toggleMenu}>
+      <button
+        className="flex items-center justify-between w-full cursor-pointer"
+        onClick={() => toggleFilterMenu('size')}
+      >
         <h2 className="text-xl font-medium text-custom-text-brown">Größe</h2>
-        {showMenu ? <RiArrowDropUpLine className="text-3xl" /> : <RiArrowDropDownLine className="text-3xl" />}
+        {openFilters.size ? <RiArrowDropUpLine className="text-3xl" /> : <RiArrowDropDownLine className="text-3xl" />}
       </button>
 
-      {showMenu && (
+      {openFilters.size && (
         <div className="transition-all duration-200 ease-in-out overflow-hidden text-lg mt-4">
           <div className="flex flex-col gap-2 font-light text-custom-text-grey pl-4">
-            {sortedSizes.map((size) => (
-              <label key={size} className="flex gap-2 cursor-pointer">
-                <input
-                  className="w-3 cursor-pointer"
-                  type="checkbox"
-                  value={size}
-                  checked={pendingFilters.size.includes(size)}
-                  onChange={() => {
-                    togglePendingFilter(size, 'size');
-                  }}
-                />
-                {size}
-              </label>
-            ))}
+            {sortedSizes.length > 0 ? (
+              sortedSizes.map((size) => (
+                <label key={size} className="flex gap-2 cursor-pointer">
+                  <input
+                    className="w-3 cursor-pointer"
+                    type="checkbox"
+                    value={size}
+                    checked={selectedSize.includes(size)}
+                    onChange={() => {
+                      toggleCheckbox(size);
+                    }}
+                  />
+                  {size}
+                </label>
+              ))
+            ) : (
+              <p>Keine Größe verfügbar</p>
+            )}
           </div>
-          <FilterButton onClick={applyFilters}>Anwenden</FilterButton>
         </div>
       )}
     </div>

@@ -8,7 +8,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loadingUser, setLoadingUser] = useState(true);
-  const [loggingOut, setLoggingOut] = useState(false); 
+  const [loggingOut, setLoggingOut] = useState(false);
   const url = import.meta.env.VITE_API_URL;
 
   // Beim Laden prüfen, ob ein Token existiert (Benutzer bleibt eingeloggt)
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
       });
 
       const data = await res.json();
-      console.log('USER DATA:', data);
+      //console.log('USER DATA:', data);
 
       if (res.ok) {
         setUser(data.user);
@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }) => {
       });
 
       const data = await res.json();
-      console.log('Login Response:', data); // Debugging
+      // console.log('Login Response:', data); // Debugging
 
       if (!res.ok) {
         toast.dismiss();
@@ -83,9 +83,9 @@ export const AuthProvider = ({ children }) => {
         throw new Error(data.message || 'Login failed');
       }
 
-      toast.success('Login successful');
+      toast.success('Anmeldung erfolgreich');
       await fetchUserData();
-      setLoggingOut(false)
+      setLoggingOut(false);
       return true;
       //  window.location.reload(); // Refresh to trigger `useAuth`
     } catch (error) {
@@ -101,7 +101,7 @@ export const AuthProvider = ({ children }) => {
     try {
       await API.get('/api/users/google');
       await fetchUserData();
-      setLoggingOut(false)
+      setLoggingOut(false);
     } catch (error) {
       console.error('Google-Login fehlgeschlagen:', error);
     }
@@ -113,7 +113,7 @@ export const AuthProvider = ({ children }) => {
       await API.post('/api/users/logout');
       Cookies.remove('token');
       setUser(null);
-      setLoggingOut(true)
+      setLoggingOut(true);
     } catch (error) {
       console.error('Logout fehlgeschlagen:', error);
     }
@@ -123,7 +123,11 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (username, email, password) => {
     try {
-      const res = await API.post('/api/users/register', { username, email, password });
+      const res = await API.post('/api/users/register', {
+        username,
+        email,
+        password
+      });
 
       return true;
     } catch (error) {
@@ -153,11 +157,16 @@ export const AuthProvider = ({ children }) => {
   // **Passwort zurücksetzen**
   const resetPassword = async (token, newPassword) => {
     try {
-      const response = await API.post(`/api/users/password-reset/${token}`, { newPassword });
+      const response = await API.post(`/api/users/password-reset/${token}`, {
+        newPassword
+      });
       console.log('Response:', response.data);
       return response.data;
     } catch (error) {
-      console.error('Fehler beim Zurücksetzen des Passworts:', error.response?.data || error.message);
+      console.error(
+        'Fehler beim Zurücksetzen des Passworts:',
+        error.response?.data || error.message
+      );
       throw error;
     }
   };

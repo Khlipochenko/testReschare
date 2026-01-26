@@ -1,4 +1,3 @@
-
 import React from 'react';
 import LogoutButton from '../components/auth/LogoutButton';
 import DashboardForm from '../components/auth/DashboardForm';
@@ -6,11 +5,9 @@ export const DashboardPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-custom-bg-page">
       <div className="w-full max-w-2xl p-8 space-y-6 bg-white shadow-lg rounded-lg">
-        <h1 className="text-3xl font-bold text-custom-text-green text-center">
-          Willkommen bei reshare
-        </h1>
+        <h1 className="text-3xl font-bold text-custom-text-green text-center">Willkommen bei reshare</h1>
         <p className="text-center text-custom-text-grey">
-          Sie sind erfolgreich angemeldet. Hier sehen Sie Ihre persönlichen Inhalte.
+          Du bist erfolgreich angemeldet. Hier siehst du deine persönlichen Inhalte.
         </p>
         {/* Hier wird DashboardForm eingefügt */}
         <DashboardForm />
@@ -25,31 +22,3 @@ export const DashboardPage = () => {
   );
 };
 export default DashboardPage;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

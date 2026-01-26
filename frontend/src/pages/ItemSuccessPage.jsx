@@ -11,7 +11,7 @@ export const ItemSuccessPage = () => {
       <div>
         <div className="flex bg-white flex-col px-7 py-16 gap-5 shadow-sm border   mt-40  h-auto  rounded-md shadow-custom-text-lightgreen">
           <h1 className="text-xl font-medium md:text-3xl text-center">Erfolg!</h1>
-          <p className="text-center">Dein neues Produkt wurde erfolgreich veröffentlicht.</p>
+          <p className="text-center">Dein Artikel wurde erfolgreich veröffentlicht.</p>
           <div className="flex gap-4">
             <NavLink
               to={`/user/items/meine-artikel`}

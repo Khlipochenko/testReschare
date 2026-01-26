@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema (
       required: [true, 'Der Benutzername ist erforderlich'],
       trim: true,
       minlength: [3, 'Der Benutzername muss mindestens 3 Zeichen lang sein'],
-      maxlength: [20, 'Der Benutzername darf maximal 20 Zeichen lang sein'],
+      maxlength: [30, 'Der Benutzername darf maximal 20 Zeichen lang sein'],
       validate: {
         validator: function (value) {
           return /^[a-zA-Z0-9 _.-]+$/.test(value);

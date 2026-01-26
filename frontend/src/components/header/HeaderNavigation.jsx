@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 export const HeaderNavigation = ({ isHomePage, isScrolled }) => {
   return (
-    <ul className={`${isHomePage && !isScrolled ? 'hidden' : 'hidden md:flex gap-8 text-2xl'}`}>
+    <ul className="flex gap-8 text-2xl">
       <li>
         <NavLink
           to="/category/Damen"

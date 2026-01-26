@@ -1,8 +1,8 @@
 // Create new item
-import { v2 as cloudinary } from "cloudinary";
-import { Item } from "../models/Item.js";
-import mongoose from "mongoose";
-import User from "../models/User.js";
+import { v2 as cloudinary } from 'cloudinary';
+import { Item } from '../models/Item.js';
+import mongoose from 'mongoose';
+import User from '../models/User.js';
 
 // All items
 export const getItems = async (req, res, next) => {
@@ -23,9 +23,7 @@ export const createNewItem = async (req, res, next) => {
   try {
     const user = await User.findById(userId);
     if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User nicht gefunden" });
+      return res.status(404).json({ success: false, message: 'User nicht gefunden' });
     }
 
     let uploadedImages = [];
@@ -54,15 +52,13 @@ export const createNewItem = async (req, res, next) => {
       location: ort,
       shipping: req.body.shipping,
       images: uploadedImages,
-      userId: user._id,
+      userId: user._id
     });
 
     user.itemsId.push(newItem._id);
     await user.save();
 
-    return res
-      .status(201)
-      .json({ success: true, message: "Neues Product hinzugefügt" });
+    return res.status(201).json({ success: true, message: 'Neuen Artikel hinzugefügt' });
   } catch (error) {
     next(error);
   }
@@ -72,13 +68,10 @@ export const createNewItem = async (req, res, next) => {
 export const getUserItemsListe = async (req, res, next) => {
   try {
     const userId = req.user.userId;
-    const user = await User.findById(userId).populate("itemsId");
-    if (!user ) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User nicht gefunden" });
+    const user = await User.findById(userId).populate('itemsId');
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User nicht gefunden' });
     }
-
 
     return res.status(200).json({ success: true, items: user.itemsId });
   } catch (e) {
@@ -93,27 +86,21 @@ export const deleteItem = async (req, res, next) => {
     const itemId = req.params.id;
     const user = await User.findById(userId);
     if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User nicht gefunden" });
+      return res.status(404).json({ success: false, message: 'User nicht gefunden' });
     }
     const item = await Item.findById(itemId);
 
     if (!item || !item.userId.equals(user._id)) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Artikel nicht gefunden" });
+      return res.status(404).json({ success: false, message: 'Artikel nicht gefunden' });
     }
     await Item.findByIdAndDelete(itemId);
-    const newItemsArray=user.itemsId.filter(itemId=>!itemId.equals(item._id))
+    const newItemsArray = user.itemsId.filter((itemId) => !itemId.equals(item._id));
 
-    user.itemsId=newItemsArray
+    user.itemsId = newItemsArray;
 
     await user.save();
 
-    return res
-      .status(200)
-      .json({ success: true, message: "Der Artikel wurde gelöscht" });
+    return res.status(200).json({ success: true, message: 'Der Artikel wurde gelöscht' });
   } catch (e) {
     next(e);
   }
@@ -136,9 +123,7 @@ export const getOneUserItem = async (req, res, next) => {
       !item
       // ||   !item.userId.equals(user._id)
     ) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Der Artikel nicht gefunden" });
+      return res.status(404).json({ success: false, message: 'Der Artikel nicht gefunden' });
     }
     return res.status(200).json({ success: true, item: item });
   } catch (e) {
@@ -151,19 +136,14 @@ export const getOneItem = async (req, res, next) => {
   try {
     const itemId = req.params.id;
 
-
     if (!mongoose.Types.ObjectId.isValid(itemId)) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Der Artikel nicht gefunden" });
+      return res.status(400).json({ success: false, message: 'Der Artikel nicht gefunden' });
     }
 
     const item = await Item.findById(itemId);
 
     if (!item) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Der Artikel nicht gefunden" });
+      return res.status(404).json({ success: false, message: 'Der Artikel nicht gefunden' });
     }
     return res.status(200).json({ success: true, item: item });
   } catch (e) {
@@ -178,30 +158,17 @@ export const itemEdit = async (req, res, next) => {
     const itemId = req.params.id;
     const images = req.files;
 
-    const {
-      title,
-      description,
-      category,
-      subcategory,
-      size,
-      color,
-      shipping,
-      ort,
-    } = req.body;
+    const { title, description, category, subcategory, size, color, shipping, ort } = req.body;
     let { imagesUrl } = req.body;
 
     const user = await User.findById(userId);
     if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User nicht gefunden" });
+      return res.status(404).json({ success: false, message: 'User nicht gefunden' });
     }
     const item = await Item.findById(itemId);
 
     if (!item || !item.userId.equals(user._id)) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Artikel nicht gefunden" });
+      return res.status(404).json({ success: false, message: 'Artikel nicht gefunden' });
     }
     let uploadedImages = [];
     if (images && images.length > 0) {
@@ -242,9 +209,7 @@ export const itemEdit = async (req, res, next) => {
     item.images = newImagesArray;
 
     await item.save();
-    return res
-      .status(200)
-      .json({ success: true, message: "Der Artikel wurde bearbeitet" });
+    return res.status(200).json({ success: true, message: 'Der Artikel wurde bearbeitet' });
   } catch (e) {
     next(e);
   }
@@ -256,24 +221,23 @@ export const getSimilarItems = async (req, res, next) => {
   const { id } = req.params;
   const objectId = new mongoose.Types.ObjectId(id);
 
-
   try {
     const items = await Item.find({
       size: size,
       category: category,
       subcategory: subcategory,
       _id: { $ne: objectId },
-      status: "aktiv",
+      status: 'aktiv'
     });
     if (items.length > 0) {
       res.json({
         success: true,
-        items: items,
+        items: items
       });
     } else {
       res.json({
         success: false,
-        message: "Nicht gefunden",
+        message: 'Nicht gefunden'
       });
     }
   } catch (e) {
@@ -283,31 +247,23 @@ export const getSimilarItems = async (req, res, next) => {
 
 // update Item
 export const itemUpdate = async (req, res, next) => {
-     const userId = req.user.userId;
+  const userId = req.user.userId;
   const { id } = req.params;
   const { status } = req.body;
 
   try {
-      const user = await User.findById(userId);
+    const user = await User.findById(userId);
     if (!user) {
-      return res
-       .status(404)
-        .json({ success: false, message: "User nicht gefunden" });
-   }
+      return res.status(404).json({ success: false, message: 'User nicht gefunden' });
+    }
     const item = await Item.findById(id);
-    if (
-      !item  || !item.userId.equals(user._id)
-    ) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Artikel nicht gefunden" });
+    if (!item || !item.userId.equals(user._id)) {
+      return res.status(404).json({ success: false, message: 'Artikel nicht gefunden' });
     }
     item.status = status;
     await item.save();
 
-    return res
-      .status(200)
-      .json({ success: true, message: "Der Status wurde geändert" });
+    return res.status(200).json({ success: true, message: 'Der Status wurde geändert' });
   } catch (e) {
     next(e);
   }

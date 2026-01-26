@@ -7,35 +7,34 @@ import { useLocation, useNavigate } from 'react-router-dom';
 export const DeleteItemButton = ({ itemId, fetchOneItem, userId }) => {
   const [open, setOpen] = useState(false);
 
-  const { url, userItems, fetchUserItems,  } = useContext(ItemsContext);
-  const navigate=useNavigate()
-  const location=useLocation()
+  const { url, userItems, fetchUserItems } = useContext(ItemsContext);
+  const navigate = useNavigate();
+  const location = useLocation();
   async function handleOnClickDeleteItem() {
     setOpen(false);
 
     try {
       const response = await fetch(`${url}/api/items/delete/${itemId}`, {
         method: 'DELETE',
-        credentials:'include'
+        credentials: 'include'
       });
       // if (!response.ok) {
       //   throw new Error(response.status);
       // }
       const result = await response.json();
-    //  console.log(result)
+      //  console.log(result)
       if (result.success) {
         fetchUserItems();
-        if(fetchOneItem){
-        navigate(-1)}
-    //    console.log('result.message',result.message)
+        if (fetchOneItem) {
+          navigate(-1);
+        }
+        //    console.log('result.message',result.message)
         toast.success(result.message);
       } else {
-        if(result.message==='No token provided'){
-          ;
-          navigate('/login', {state:{from: location.pathname}})
-         return toast.error('Um einen Artikel zu bearbeiten, melde dich bitte an!')
-       }   
-    
+        if (result.message === 'No token provided') {
+          navigate('/login', { state: { from: location.pathname } });
+          return toast.error('Um einen Artikel zu bearbeiten, melde dich bitte an!');
+        }
       }
     } catch (e) {
       console.log(e);
@@ -68,7 +67,7 @@ export const DeleteItemButton = ({ itemId, fetchOneItem, userId }) => {
                     </DialogTitle>
                     <div className="mt-2">
                       <p className="text-sm text-custom-text-brown">
-                        Möchten Sie diesen Artikel wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.
+                        Möchtest du diesen Artikel wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.
                       </p>
                     </div>
                   </div>

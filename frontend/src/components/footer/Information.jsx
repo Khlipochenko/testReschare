@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom'
 
 export const Information = () => {
   return (
@@ -41,32 +41,34 @@ export const Information = () => {
           >
             Abwicklung
           </p>
-          <p
+          {/* <p
             className="
                     hover:text-custom-text-lightgreen
                     hover:underline
                     "
           >
             AGBs
-          </p>
-          <p
+          </p> */}
+          <Link
+            to="/privacy"
             className="
                     hover:text-custom-text-lightgreen
                     hover:underline
                     "
           >
             Datenschutz
-          </p>
-          <p
+          </Link>
+          <Link
+            to="/imprint"
             className="
                     hover:text-custom-text-lightgreen
                     hover:underline
                     "
           >
             Impressum
-          </p>
+          </Link>
         </div>
       </div>
     </>
-  );
-};
+  )
+}

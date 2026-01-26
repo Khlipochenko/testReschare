@@ -22,6 +22,8 @@ import ProtectedRoute from '../components/auth/ProtectedRoutes';
 import { ProtectedItemRouter } from '../components/Item/ProtectedItemRouter';
 import { AboutUs } from '../pages/AboutUs';
 import { SearchResultPage } from '../pages/SeachResultPage';
+import PrivacyPolicy from '../pages/PrivacyPolicy';
+import Imprint from '../pages/Imprint';
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -122,6 +124,14 @@ export const router = createBrowserRouter([
       {
         path: '/about',
         element: <AboutUs />
+      },
+      {
+        path: '/privacy',
+        element: <PrivacyPolicy />
+      },
+      {
+        path: '/imprint',
+        element: <Imprint />
       }
     ]
   }

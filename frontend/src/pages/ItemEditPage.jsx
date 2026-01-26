@@ -105,7 +105,7 @@ export const ItemEditPage = ({ userId }) => {
         setShipping(result.item.shipping);
         setStatus(result.item.status);
       } else {
-        if (result.message === 'No token provided') toast.error('Bitte melden Sie sich an!');
+        if (result.message === 'No token provided') toast.error('Bitte melde dich an!');
         navigate('/login', { state: { from: location.pathname } });
       }
     } catch (e) {

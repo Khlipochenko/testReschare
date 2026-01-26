@@ -6,7 +6,7 @@ export const useToggleFilter = () => {
 
   //filterValue: z.B. Damen, filterType: z.B. Kategorie
   //filterValue: z.B. Blau, filterType: z.B. Farbe
-  const togglePendingFilter = (filterValue, filterType) => {
+  const toggleCheckbox = (filterValue, filterType) => {
     setPendingFilters((prevFilters) => {
       const newFilterValues = prevFilters[filterType].includes(filterValue)
         ? prevFilters[filterType].filter((item) => item !== filterValue)
@@ -16,5 +16,5 @@ export const useToggleFilter = () => {
     });
   };
 
-  return { togglePendingFilter };
+  return { toggleCheckbox };
 };
