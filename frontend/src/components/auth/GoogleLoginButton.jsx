@@ -12,14 +12,14 @@ const GoogleLoginButton = () => {
       console.error('Fehler beim Google-Login:', error);
     }
   };
-  return (
-    <button
-      onClick={handleGoogleLogin}
-      className="flex items-center justify-center w-full px-4 py-2 text-white bg-gray-700 hover:bg-gray-800 rounded-md"
-    >
-      <FcGoogle className="mr-2 text-2xl" />
-      Mit Google anmelden
-    </button>
+  return (<></>
+  //  <button
+ //     onClick={handleGoogleLogin}
+  //    className="flex items-center justify-center w-full px-4 py-2 text-white bg-gray-700 hover:bg-gray-800 rounded-md"
+ //   >
+ //     <FcGoogle className="mr-2 text-2xl" />
+  //    Mit Google anmelden
+ //   </button>
   );
 };
 export default GoogleLoginButton;
