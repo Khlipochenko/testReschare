@@ -36,7 +36,8 @@ export const HomePage = () => {
               items-center
               justify-items-center
               transition
-              text-5xl
+            text-4xl
+              md:text-5xl
               gap-8
               inset-0
               bottom-48
