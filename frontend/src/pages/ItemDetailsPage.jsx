@@ -120,7 +120,7 @@ export const ItemDetailsPage = () => {
           )}
           {itemLoading === 'loaded' && item && (
             <>
-              <div className="w-full border rounded-md p-4 shadow relative pt-9 mx-auto bg-white">
+              <div className="w-11/12 lg:w-full border rounded-md p-4 shadow relative pt-9 mx-auto bg-white">
                 <span className="top-2 absolute right-10 text-xs sm:text-sm text-custom-text-grey">
                   Geposted {moment(item.createdAt).fromNow()}
                 </span>
